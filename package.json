@@ -22,6 +22,7 @@
     "broccoli-asset-rev": "^2.2.0",
     "ember-ajax": "0.7.1",
     "ember-bootstrap": "0.9.1",
+    "ember-browserify": "^1.1.12",
     "ember-cli": "2.4.2",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-babel": "^5.1.5",
@@ -40,6 +41,7 @@
     "ember-resolver": "^2.0.3",
     "emberfire": "2.0.1",
     "firebase": "^3.3.0",
-    "loader.js": "^4.0.0"
+    "loader.js": "^4.0.0",
+    "pokersolver": "^2.1.2"
   }
 }

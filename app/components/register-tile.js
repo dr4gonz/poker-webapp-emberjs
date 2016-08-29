@@ -43,6 +43,7 @@ export default Ember.Component.extend({
         var params = {
           name: desiredUserName,
           pw: pw,
+          handIsLive: true,
         };
         this.set('name', '');
         this.set('pw', '');

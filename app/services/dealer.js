@@ -1,10 +1,9 @@
 import Ember from 'ember';
-var Hand = require('pokersolve').Hand;
-// import Hand from 'pokersolver';
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   mDeck: [],
+  community: [],
 
   populateDeck() {
     var deck = [];
@@ -13,15 +12,10 @@ export default Ember.Service.extend({
     var values = ["2", "3", "4","5","6","7","8","9", "T", "J", "Q","K","A"];
     for (var i = 0; i < suits.length; i++) {
       for (var j = 0; j < values.length; j++) {
-        var params = {
-          suit: suits[i],
-          value: values[j]
-        };
-        deck.push(params);
         this.get('mDeck').push(values[j]+suits[i]);
       }
     }
-    deck = this.shuffle(deck);
+    this.set('mDeck', this.shuffle(this.get('mDeck')));
     deck.forEach((card) => {
       this.get('store').createRecord('card', card).save();
     });
@@ -53,16 +47,46 @@ export default Ember.Service.extend({
   dealHand() {
     var mDeck = this.get('mDeck');
     var community = [mDeck[0], mDeck[1], mDeck[2], mDeck[3], mDeck[4]];
-    var flop = [community[0], community[1], community[2]];
-    var turn = community[3];
-    var river = community[4];
-    var p1Hand = [mDeck[5], mDeck[6]].concat(community);
-    var p2Hand = [mDeck[7], mDeck[8]].concat(community);
-    var p1BestHand = Hand.solve(p1Hand);
-    var p2BestHand = Hand.solve(p2Hand);
-    var winner = Hand.winners([p1BestHand, p2BestHand]);
-    console.log(p1BestHand, p2BestHand, winner);
+    var store = this.get('store');
+    var that = this;
+    this.set('community', community);
+    var p1Hand = [mDeck[5], mDeck[6]];
+    var p2Hand = [mDeck[7], mDeck[8]];
+    this.get('store').findAll('user').then(function(players) {
+      players.toArray()[0].set('cards', p1Hand);
+      players.toArray()[1].set('cards', p2Hand);
+      console.log(JSON.parse(JSON.stringify(players.toArray())));
+      players.save();
+      // var p1BestHand = Hand.solve(p1Hand);
+      // var p2BestHand = Hand.solve(p2Hand);
+      // var winner = Hand.winners([p1BestHand, p2BestHand]);
+      // console.log(p1BestHand, p2BestHand, winner);
+      console.log(that.findWinner());
+
+    });
+  },
+  findWinner() {
+    debugger;
+    var activePlayers = this.get('store').query('user', {
+      orderBy: 'handIsLive',
+      equalTo: true
+    });
+
+    var bestHands = [];
+    activePlayers.forEach(function(player) {
+      console.log(player);
+      var bestHand = Hand.solve(player.get('cards').concat(this.get('community')));
+      player.set('bestHand', bestHand);
+      player.save();
+      bestHands.push(bestHand);
+    });
+    var winningHands = Hand.winners(bestHands);
+    var winningPlayer = activePlayers.forEach(function(player){
+      if (player.get('bestHand') === winningHands[0]) {
+        return player;
+      }
+    });
+    //do something with winningPlayer
+    return winningPlayer;
   }
-
-
 });
