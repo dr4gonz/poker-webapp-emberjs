@@ -16,7 +16,14 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    firebase: {
+
+      apiKey: "AIzaSyBFd_vKAe8Hh-bKda0ixX7g3VJxY4qfWxQ",
+      authDomain: "poker-emberjs.firebaseapp.com",
+      databaseURL: "https://poker-emberjs.firebaseio.com",
+      storageBucket: "poker-emberjs.appspot.com",
+    },
   };
 
   if (environment === 'development') {
