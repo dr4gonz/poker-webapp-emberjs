@@ -18,11 +18,10 @@ module.exports = function(environment) {
       // when it is created
     },
     firebase: {
-
-      apiKey: "AIzaSyBFd_vKAe8Hh-bKda0ixX7g3VJxY4qfWxQ",
-      authDomain: "poker-emberjs.firebaseapp.com",
-      databaseURL: "https://poker-emberjs.firebaseio.com",
-      storageBucket: "poker-emberjs.appspot.com",
+      apiKey: "AIzaSyDUXcjnD2pstv7kQ46a6L2zFqq6Ysno_xs",
+      authDomain: "epicodus-poker.firebaseapp.com",
+      databaseURL: "https://epicodus-poker.firebaseio.com",
+      storageBucket: "epicodus-poker.appspot.com",
     },
   };
 

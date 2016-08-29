@@ -1,0 +1,21 @@
+<div class="col-md-8 col-md-offset-2">
+  <form>
+    <div class="form-group">
+      {{input value=name id="name" placeholder="username"}}
+    </div>
+
+    <div class="form-group">
+      {{input value=pw id="pw" type="password" placeholder="password"}}
+    </div>
+
+    <div class="form-group">
+      {{input value=pwConf id="pwConf" type="password" placeholder="confirm password"}}
+    </div>
+    <button class="btn btn-sm btn-primary" {{action 'registerUser' users}}>register</button>
+  </form>
+  {{#if failedRegister}}
+    <div class="fail-msg">
+      <h3>Error: {{failMsg}}</h3>
+    </div>
+  {{/if}}
+</div>

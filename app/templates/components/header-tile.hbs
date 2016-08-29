@@ -1,0 +1,25 @@
+<div class="row jumbotron page-header">
+  <div class="col-md-4 page-header text-center">
+    {{#link-to 'index'}}<h1>poker</h1>{{/link-to}}
+  </div>
+  <div class="col-md-4">
+    <div class="form-container">
+      {{#unless auth.loggedIn}}
+        {{#if loginForm}}
+          {{login-tile users=users}}
+        {{else if registerForm}}
+          {{register-tile users=users}}
+        {{/if}}
+      {{/unless}}
+    </div>
+  </div>
+  <div class="col-md-4 text-center auth-text">
+    {{#if auth.loggedIn}}
+    <h4>logged in as <span class="highlight">{{auth.currentUser.name}}</span></h4>
+    <h4 class="form-link" {{action 'logOut'}}>logout</h4>
+    {{else}}
+    <h4 class="form-link" {{action 'showLoginForm'}}>login</h4>
+    <h4 class="form-link" {{action 'showRegisterForm'}}>register</h4>
+    {{/if}}
+  </div>
+</div>
