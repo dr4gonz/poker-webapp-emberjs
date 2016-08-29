@@ -1,4 +1,8 @@
 
-{{header-tile users=model}}
+{{header-tile users=model.users}}
 
-{{make-deck}}
+{{make-deck deck=model.cards game=model.game}}
+
+{{new-game}}
+
+{{deck-tile deck=model.cards}}

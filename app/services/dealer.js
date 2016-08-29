@@ -1,11 +1,14 @@
 import Ember from 'ember';
-import Firebase from 'firebase';
+var Hand = require('pokersolve').Hand;
+// import Hand from 'pokersolver';
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
+  mDeck: [],
 
   populateDeck() {
     var deck = [];
+    // this.set('mDeck', []);
     var suits = ["h", "c", "d", "s"];
     var values = ["2", "3", "4","5","6","7","8","9", "T", "J", "Q","K","A"];
     for (var i = 0; i < suits.length; i++) {
@@ -15,17 +18,14 @@ export default Ember.Service.extend({
           value: values[j]
         };
         deck.push(params);
+        this.get('mDeck').push(values[j]+suits[i]);
       }
     }
     deck = this.shuffle(deck);
     deck.forEach((card) => {
       this.get('store').createRecord('card', card).save();
     });
-  },
-  popCard() {
-    //remove a card from the array and return it
-    //save deck to firebase
-
+    this.dealHand();
   },
   // Fisher-Yates shuffle method
   shuffle(array) {
@@ -47,8 +47,21 @@ export default Ember.Service.extend({
         card.deleteRecord();
         card.get('isDeleted');
         card.save();
-      })
+      });
     });
+  },
+  dealHand() {
+    var mDeck = this.get('mDeck');
+    var community = [mDeck[0], mDeck[1], mDeck[2], mDeck[3], mDeck[4]];
+    var flop = [community[0], community[1], community[2]];
+    var turn = community[3];
+    var river = community[4];
+    var p1Hand = [mDeck[5], mDeck[6]].concat(community);
+    var p2Hand = [mDeck[7], mDeck[8]].concat(community);
+    var p1BestHand = Hand.solve(p1Hand);
+    var p2BestHand = Hand.solve(p2Hand);
+    var winner = Hand.winners([p1BestHand, p2BestHand]);
+    console.log(p1BestHand, p2BestHand, winner);
   }
 
 
