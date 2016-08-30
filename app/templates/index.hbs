@@ -2,3 +2,11 @@
 {{header-tile users=model.users}}
 
 {{make-deck}}
+{{new-table}}
+{{#each model.tables as |table|}}
+  {{table-tile table=table joinTable="joinTable"}}
+  {{#if joinedTable}}
+    <h1>game tile should be here</h1>
+    {{game-tile table=table}}
+  {{/if}}
+{{/each}}
