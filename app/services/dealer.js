@@ -7,7 +7,6 @@ export default Ember.Service.extend({
   winningPlayer: null,
   p1HoleCards: [],
   p2HoleCards: [],
-  p3HoleCards: [],
   flop: [],
   turn: null,
   river: null,
@@ -42,28 +41,26 @@ export default Ember.Service.extend({
   },
 
   dealHand(table) {
+    table.set('preflop', true);
+    table.save();
     var thisService = this;
     var mDeck = this.get('mDeck');
     var community = [mDeck[0], mDeck[1], mDeck[2], mDeck[3], mDeck[4]];
     this.set('community', community);
     var p1Hand = [mDeck[5], mDeck[6]].concat(community);
     var p2Hand = [mDeck[7], mDeck[8]].concat(community);
-    var p3Hand = [mDeck[9], mDeck[10]].concat(community);
 
     this.get('store').findAll('user').then(function(players) {
       table.get('users').toArray()[0].set('cards', p1Hand);
       table.get('users').toArray()[1].set('cards', p2Hand);
-      table.get('users').toArray()[2].set('cards', p3Hand);
       table.get('users').toArray()[0].set('holeCards', [mDeck[5], mDeck[6]]);
       table.get('users').toArray()[1].set('holeCards', [mDeck[7], mDeck[8]]);
-      table.get('users').toArray()[2].set('holeCards', [mDeck[9], mDeck[10]]);
       players.save();
       thisService.findWinners().then(function(winner){
         thisService.set('winningPlayer', winner[0]);
       });
       thisService.set('p1HoleCards',[mDeck[5], mDeck[6]]);
       thisService.set('p2HoleCards',[mDeck[7], mDeck[8]]);
-      thisService.set('p3HoleCards',[mDeck[9], mDeck[10]]);
       thisService.set('flop',[mDeck[0], mDeck[1], mDeck[2]]);
       thisService.set('turn',mDeck[3]);
       thisService.set('river',mDeck[4]);
@@ -113,5 +110,25 @@ export default Ember.Service.extend({
     });
     //No non-matching cards were found if we get to this point
     return returnValue;
+  },
+
+  dealFlop(table) {
+    table.set('flop', true);
+    table.save();
+  },
+  dealTurn(table) {
+    table.set('turn', true);
+    table.save();
+  },
+  dealRiver(table) {
+    table.set('river', true);
+    table.save();
+  },
+  finishHand(table) {
+    table.set('preflop', false);
+    table.set('flop', false);
+    table.set('turn', false);
+    table.set('river', false);
+    table.save();
   }
 });

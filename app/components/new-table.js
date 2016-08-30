@@ -7,6 +7,10 @@ export default Ember.Component.extend({
       var params = {
         name: this.get('name'),
         users: [],
+        preflop: false,
+        flop: false,
+        turn: false,
+        river: false,
       };
       var newTable = this.get('store').createRecord('table', params);
       newTable.save();

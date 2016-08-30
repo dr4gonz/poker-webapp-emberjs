@@ -45,7 +45,8 @@ export default Ember.Component.extend({
           pw: pw,
           handIsLive: true,
           cards: [],
-          bestHand: [],
+          holeCards: [],
+          table: null
         };
         this.set('name', '');
         this.set('pw', '');
