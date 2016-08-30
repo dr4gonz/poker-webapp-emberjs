@@ -7,6 +7,7 @@ export default Ember.Service.extend({
   winningPlayer: null,
   p1HoleCards: [],
   p2HoleCards: [],
+  p3HoleCards: [],
   flop: [],
   turn: null,
   river: null,
@@ -47,18 +48,22 @@ export default Ember.Service.extend({
     this.set('community', community);
     var p1Hand = [mDeck[5], mDeck[6]].concat(community);
     var p2Hand = [mDeck[7], mDeck[8]].concat(community);
+    var p3Hand = [mDeck[9], mDeck[10]].concat(community);
 
     this.get('store').findAll('user').then(function(players) {
       table.get('users').toArray()[0].set('cards', p1Hand);
       table.get('users').toArray()[1].set('cards', p2Hand);
+      table.get('users').toArray()[2].set('cards', p3Hand);
       table.get('users').toArray()[0].set('holeCards', [mDeck[5], mDeck[6]]);
       table.get('users').toArray()[1].set('holeCards', [mDeck[7], mDeck[8]]);
+      table.get('users').toArray()[2].set('holeCards', [mDeck[9], mDeck[10]]);
       players.save();
       thisService.findWinners().then(function(winner){
         thisService.set('winningPlayer', winner[0]);
       });
       thisService.set('p1HoleCards',[mDeck[5], mDeck[6]]);
       thisService.set('p2HoleCards',[mDeck[7], mDeck[8]]);
+      thisService.set('p3HoleCards',[mDeck[9], mDeck[10]]);
       thisService.set('flop',[mDeck[0], mDeck[1], mDeck[2]]);
       thisService.set('turn',mDeck[3]);
       thisService.set('river',mDeck[4]);

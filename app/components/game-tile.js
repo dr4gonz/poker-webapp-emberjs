@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   flop: false,
   turn: false,
   river: false,
+  
 
   actions: {
     dealHand(table) {
