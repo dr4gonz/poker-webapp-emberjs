@@ -5,6 +5,5 @@ export default DS.Model.extend({
   pw: DS.attr(),
   cards: DS.attr(),
   handIsLive: DS.attr(),
-  bestHand: DS.attr()
 
 });
