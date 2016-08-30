@@ -5,3 +5,7 @@
 {{#each table.users as |user|}}
   {{user.name}}
 {{/each}}
+
+{{#if showGameTile}}
+  {{game-tile table=table}}
+{{/if}}

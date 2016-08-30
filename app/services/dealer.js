@@ -37,16 +37,6 @@ export default Ember.Service.extend({
     return array;
   },
 
-  deleteDeck() {
-    this.get('store').findAll('card').then(function(cards) {
-      cards.forEach(function(card) {
-        card.deleteRecord();
-        card.get('isDeleted');
-        card.save();
-      });
-    });
-  },
-
   dealHand() {
     var thisService = this;
     var mDeck = this.get('mDeck');

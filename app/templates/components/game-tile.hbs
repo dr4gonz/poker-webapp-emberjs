@@ -1,4 +1,13 @@
 <h1>GAME TILE</h1>
-{{#each table.users as |user|}}
-  {{user.name}}
-{{/each}}
+<ul>
+  {{#if flop}}{{#each dealer.flop as |card|}}{{card}}{{/each}}{{/if}}
+  {{#if turn}}{{dealer.turn}}{{/if}}
+  {{#if river}}{{dealer.river}}{{/if}}
+  {{#each table.users as |user|}}
+    <li>{{user.name}}{{#if preflop}} - {{#each user.cards as |card|}}{{card}}{{/each}}{{/if}}</li>
+  {{/each}}
+  <button {{action 'dealHand'}}>Deal Hand</button>
+  <button {{action 'dealFlop'}}>Deal Flop</button>
+  <button {{action 'dealTurn'}}>Deal Turn</button>
+  <button {{action 'dealRiver'}}>Deal River</button>
+</ul>

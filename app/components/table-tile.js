@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   auth: Ember.inject.service(),
+  showGameTile: false,
+
   actions: {
     joinTable(table) {
       var currentUser = this.get('auth').currentUser;
@@ -9,7 +11,7 @@ export default Ember.Component.extend({
       currentUser.save().then(function(){
         table.save();
       });
-      this.sendAction('joinTable');
+      this.set('showGameTile', true);
     },
   }
 });
