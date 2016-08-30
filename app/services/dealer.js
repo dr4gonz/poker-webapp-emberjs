@@ -40,6 +40,7 @@ export default Ember.Service.extend({
   },
 
   dealHand(table) {
+    table.set('currentStreet', 'preflop');
     table.set('preflop', true);
     this.assignDealer(table);
     table.save();
@@ -136,12 +137,18 @@ export default Ember.Service.extend({
     table.save();
   },
   assignDealer(table) {
+    var oldActiveUser = table.get('users').toArray()[table.get('activePlayer')];
+    oldActiveUser.set('isActive', false);
+    oldActiveUser.save();
     table.set('dealer', table.get('dealer') + 1);
     if (table.get('dealer') >= table.get('users').toArray().length) {
       table.set('dealer', 0);
     }
-    table.get('users').toArray()[table.get('dealer')].set('isActive', true);
+    var activeUser = table.get('users').toArray()[table.get('dealer')];
+    activeUser.set('isActive', true);
+    activeUser.save();
     table.set('activePlayer', table.get('dealer'));
+    table.set('lastToAct', table.get('dealer'));
     table.save();
   },
 

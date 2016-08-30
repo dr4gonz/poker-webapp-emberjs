@@ -8,5 +8,7 @@ export default DS.Model.extend({
   turn: DS.attr(),
   river: DS.attr(),
   dealer: DS.attr(),
-  activePlayer: DS.attr()
+  activePlayer: DS.attr(),
+  lastToAct: DS.attr(),
+  currentStreet: DS.attr(),
 });

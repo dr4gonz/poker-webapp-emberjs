@@ -5,14 +5,16 @@ export default Ember.Component.extend({
   actions: {
     createTable() {
       var params = {
-        name: this.get('name'),
+        name: this.get('name') ? name: "New Table",
         users: [],
         preflop: false,
         flop: false,
         turn: false,
         river: false,
         dealer: 0,
-        activePlayer: 0
+        activePlayer: 0,
+        lastToAct: null,
+        currentStreet: null,
       };
       var newTable = this.get('store').createRecord('table', params);
       newTable.save();

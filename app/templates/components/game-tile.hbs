@@ -1,8 +1,17 @@
-<h1>GAME TILE</h1>
+<h1>Current street: {{table.currentStreet}}</h1>
 <ul>
-  {{#if table.flop}}{{#each dealer.flop as |card|}}{{card}}{{/each}}{{/if}}
-  {{#if table.turn}}{{dealer.turn}}{{/if}}
-  {{#if table.river}}{{dealer.river}}{{/if}}
+  {{#if (eq table.currentStreet 'flop')}}
+    {{#each dealer.flop as |card|}}{{card}}{{/each}}
+  {{/if}}
+  {{#if (eq table.currentStreet 'turn')}}
+    {{#each dealer.flop as |card|}}{{card}}{{/each}}
+    {{dealer.turn}}
+  {{/if}}
+  {{#if (eq table.currentStreet 'river')}}
+    {{#each dealer.flop as |card|}}{{card}}{{/each}}
+    {{dealer.turn}}
+    {{dealer.river}}
+  {{/if}}
   {{#each table.users as |user|}}
     <li>{{user.name}}
       {{#if table.preflop}}
