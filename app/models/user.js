@@ -6,5 +6,6 @@ export default DS.Model.extend({
   cards: DS.attr(),
   holeCards: DS.attr(),
   handIsLive: DS.attr(),
-  table: DS.belongsTo()
+  table: DS.belongsTo(),
+  isActive: DS.attr()
 });

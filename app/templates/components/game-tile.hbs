@@ -5,9 +5,10 @@
   {{#if table.river}}{{dealer.river}}{{/if}}
   {{#each table.users as |user|}}
     <li>{{user.name}}
-      {{#if table.preflop}}{{#if (eq user auth.currentUser)}} - {{#each user.holeCards as |card|}}
-        {{card}}
-      {{/each}}{{/if}}{{/if}}
+      {{#if table.preflop}}
+        {{#if (eq user auth.currentUser)}} - {{#each user.holeCards as |card|}}
+          {{card}}
+      {{/each}}{{player-action-tile user=user table=table}}{{/if}}{{/if}}
     </li>
   {{/each}}
   <button {{action 'dealHand' table}}>Deal Hand</button>

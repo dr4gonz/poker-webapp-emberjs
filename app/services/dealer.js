@@ -129,6 +129,10 @@ export default Ember.Service.extend({
     table.set('flop', false);
     table.set('turn', false);
     table.set('river', false);
+    table.get('users').forEach(function(user) {
+      user.set('isActive', false);
+      user.save();
+    });
     table.save();
   },
   assignDealer(table) {
@@ -136,6 +140,8 @@ export default Ember.Service.extend({
     if (table.get('dealer') >= table.get('users').toArray().length) {
       table.set('dealer', 0);
     }
+    table.get('users').toArray()[table.get('dealer')].set('isActive', true);
+    table.set('activePlayer', table.get('dealer'));
     table.save();
   },
 
