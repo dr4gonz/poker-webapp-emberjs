@@ -6,7 +6,7 @@
   {{#each table.users as |user|}}
     <li>{{user.name}}{{#if preflop}} - {{#each user.cards as |card|}}{{card}}{{/each}}{{/if}}</li>
   {{/each}}
-  <button {{action 'dealHand'}}>Deal Hand</button>
+  <button {{action 'dealHand' table}}>Deal Hand</button>
   <button {{action 'dealFlop'}}>Deal Flop</button>
   <button {{action 'dealTurn'}}>Deal Turn</button>
   <button {{action 'dealRiver'}}>Deal River</button>

@@ -11,7 +11,9 @@ export default Ember.Service.extend({
   turn: null,
   river: null,
 
-  populateDeck() {
+  populateDeck(table) {
+    console.log(table.get('users'));
+    this.set('mDeck',[]);
     var suits = ["h", "c", "d", "s"];
     var values = ["2", "3", "4","5","6","7","8","9", "T", "J", "Q","K","A"];
     for (var i = 0; i < suits.length; i++) {
@@ -19,8 +21,9 @@ export default Ember.Service.extend({
         this.get('mDeck').push(values[j]+suits[i]);
       }
     }
+    console.log(this.get('mDeck'));
     this.set('mDeck', this.shuffle(this.get('mDeck')));
-    this.dealHand();
+    this.dealHand(table);
   },
   // Fisher-Yates shuffle method
   shuffle(array) {
@@ -37,7 +40,7 @@ export default Ember.Service.extend({
     return array;
   },
 
-  dealHand() {
+  dealHand(table) {
     var thisService = this;
     var mDeck = this.get('mDeck');
     var community = [mDeck[0], mDeck[1], mDeck[2], mDeck[3], mDeck[4]];
@@ -45,8 +48,8 @@ export default Ember.Service.extend({
     var p1Hand = [mDeck[5], mDeck[6]].concat(community);
     var p2Hand = [mDeck[7], mDeck[8]].concat(community);
     this.get('store').findAll('user').then(function(players) {
-      players.toArray()[0].set('cards', p1Hand);
-      players.toArray()[1].set('cards', p2Hand);
+      table.get('users').toArray()[0].set('cards', p1Hand);
+      table.get('users').toArray()[1].set('cards', p2Hand);
       players.save();
       thisService.findWinners().then(function(winner){
         thisService.set('winningPlayer', winner[0]);

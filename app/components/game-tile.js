@@ -9,9 +9,10 @@ export default Ember.Component.extend({
   river: false,
 
   actions: {
-    dealHand() {
-      this.get('dealer').populateDeck();
+    dealHand(table) {
+      this.get('dealer').populateDeck(table);
       this.set('preflop', true);
+
     },
     dealFlop() {
       this.set('flop', true);
