@@ -1,12 +1,13 @@
 
 {{header-tile users=model.users}}
 
-{{make-deck deck=model.cards game=model.game}}
 
-{{new-game}}
-
-{{deck-tile deck=model.cards}}
-
-{{#each dealer.mDeck as |card|}}
-{{card}}
+{{make-deck}}
+{{new-table}}
+{{#each model.tables as |table|}}
+  {{table-tile table=table joinTable="joinTable"}}
+  {{#if joinedTable}}
+    <h1>game tile should be here</h1>
+    {{game-tile table=table}}
+  {{/if}}
 {{/each}}
