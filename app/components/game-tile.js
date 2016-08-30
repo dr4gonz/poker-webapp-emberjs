@@ -20,7 +20,6 @@ export default Ember.Component.extend({
     },
     finishHand(table) {
       this.get('dealer').finishHand(table);
-
     }
 
   }

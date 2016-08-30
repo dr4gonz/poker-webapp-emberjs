@@ -2,9 +2,7 @@
 {{header-tile users=model.users}}
 
 
-{{make-deck}}
 {{new-table}}
 {{#each model.tables as |table|}}
   {{table-tile table=table joinTable="joinTable"}}
 {{/each}}
-{{card-display}}
