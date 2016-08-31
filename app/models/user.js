@@ -9,4 +9,6 @@ export default DS.Model.extend({
   table: DS.belongsTo(),
   isActive: DS.attr(),
   seat: DS.attr(),
+  currentBet: DS.attr(),
+  chips: DS.attr(),
 });

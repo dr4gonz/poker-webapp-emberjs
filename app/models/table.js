@@ -13,5 +13,7 @@ export default DS.Model.extend({
   currentStreet: DS.attr(),
   flopCards: DS.attr(),
   turnCard: DS.attr(),
-  riverCard: DS.attr()
+  riverCard: DS.attr(),
+  mainPot: DS.attr(),
+  amountToCall: DS.attr()
 });

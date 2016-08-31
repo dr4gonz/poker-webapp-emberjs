@@ -4,7 +4,6 @@ export default Ember.Service.extend({
   store: Ember.inject.service(),
   mDeck: [],
   community: [],
-  winningPlayer: null,
   p1HoleCards: [],
   p2HoleCards: [],
   flop: [],
@@ -20,7 +19,6 @@ export default Ember.Service.extend({
         this.get('mDeck').push(values[j]+suits[i]);
       }
     }
-    console.log(this.get('mDeck'));
     this.set('mDeck', this.shuffle(this.get('mDeck')));
     this.dealHand(table);
   },
@@ -42,6 +40,8 @@ export default Ember.Service.extend({
   dealHand(table) {
     table.set('currentStreet', 'preflop');
     table.set('preflop', true);
+    table.set('amountToCall', 0);
+    table.set('mainPot', 0);
     this.assignDealer(table);
     table.save();
     var thisService = this;
@@ -63,10 +63,9 @@ export default Ember.Service.extend({
       playerTwo.set('holeCards', [mDeck[7], mDeck[8]]);
       playerOne.set('handIsLive', true);
       playerTwo.set('handIsLive', true);
+      playerOne.set('currentBet', 0);
+      playerTwo.set('currentBet', 0);
       players.save();
-      thisService.findWinners().then(function(winner){
-        thisService.set('winningPlayer', winner[0]);
-      });
       thisService.set('p1HoleCards',[mDeck[5], mDeck[6]]);
       thisService.set('p2HoleCards',[mDeck[7], mDeck[8]]);
       thisService.set('flop',[mDeck[0], mDeck[1], mDeck[2]]);
@@ -74,9 +73,8 @@ export default Ember.Service.extend({
       thisService.set('river',mDeck[4]);
     });
   },
-  findWinners() {
+  findWinners(table) {
     var thisService = this;
-    // var community = this.get('community');
     return this.get('store').query('user', {
       orderBy: 'handIsLive',
       equalTo: true
@@ -84,8 +82,6 @@ export default Ember.Service.extend({
       var bestHands = [];
       activePlayers.forEach(function(player) {
         var bestHand = Hand.solve(player.get('cards'));
-        // player.set('bestHand', bestHand);
-        // player.save();
         bestHands.push(bestHand);
       });
       var winningHands = Hand.winners(bestHands);
@@ -103,8 +99,9 @@ export default Ember.Service.extend({
       if (winningPlayers.length === 2) {
         alert ("Tie!");
       }
-      console.log(winningPlayers[0]);
-      return winningPlayers;
+      // console.log(winningPlayers[0].get('name'));
+      console.log("winningPlayers[0]", winningPlayers[0])
+      thisService.awardPot(table, winningPlayers[0]);
     });
   },
 
@@ -158,5 +155,13 @@ export default Ember.Service.extend({
     table.set('lastToAct', table.get('dealer'));
     table.save();
   },
+  awardPot(table, winningPlayer) {
+    winningPlayer.set('chips', table.get('mainPot') + winningPlayer.get('chips'));
+    winningPlayer.save();
+    alert(winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");
+    table.set('mainPot', 0);
+    table.save();
+    this.populateDeck(table);
+  }
 
 });

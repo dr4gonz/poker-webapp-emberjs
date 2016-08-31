@@ -19,7 +19,6 @@ export default Ember.Service.extend({
       nextActiveUser = table.get('users').toArray()[activePlayerIndex];
     } while (!nextActiveUser.get('handIsLive'));
 
-    console.log('setting '+nextActiveUser.get('name')+' to active...');
     nextActiveUser.set('isActive', true);
     nextActiveUser.save();
 
@@ -29,7 +28,9 @@ export default Ember.Service.extend({
   },
 
   checkEndStreet(table) {
+    var thisService = this;
     var currentStreet = table.get('currentStreet');
+    var users = table.get('users').toArray();
     if (table.get('activePlayer') === table.get('lastToAct')) {
       switch (currentStreet) {
         case "preflop":
@@ -43,8 +44,10 @@ export default Ember.Service.extend({
           break;
         case "river":
           table.set('currentStreet', 'finished');
+          thisService.get('dealer').findWinners(table);
           break;
       }
+
       var activePlayerIndex = table.get('activePlayer');
       var activePlayer = table.get('users').toArray()[activePlayerIndex];
       activePlayer.set('isActive', false);
@@ -61,6 +64,11 @@ export default Ember.Service.extend({
 
       newActivePlayer.set('isActive', true);
       newActivePlayer.save();
+      users.forEach((user) => {
+        user.set('currentBet', 0);
+        user.save();
+      });
+      table.set('amountToCall', 0);
       table.save();
 
       return true; //true signifies that action is done for this street
@@ -88,11 +96,51 @@ export default Ember.Service.extend({
     });
     if (liveHandCount === 1) {
       this.get('dealer').finishHand(table);
+      this.get('dealer').awardPot(table, lastLivePlayer);
       this.get('dealer').populateDeck(table);
-      console.log(lastLivePlayer.get('name') +" won the hand");
       return false;
     } else {
       return true;
     }
+  },
+  bet(table, betAmount) {
+    var mainPot = table.get('mainPot');
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('chips', (activeUser.get('chips')-betAmount));
+    activeUser.set('currentBet', betAmount);
+    activeUser.save();
+    table.set('mainPot', mainPot + betAmount);
+    table.set('amountToCall', betAmount);
+    table.set('lastToAct', table.get('activePlayer'));
+    table.save();
+
+    this.passActivePlayer(table);
+  },
+  callBet(table) {
+    var mainPot = table.get('mainPot');
+    var amountToCall = table.get('amountToCall');
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+
+    table.set('mainPot', (mainPot + (amountToCall - activeUser.get('currentBet'))));
+    activeUser.set('chips', (activeUser.get('chips')-(amountToCall - activeUser.get('currentBet'))));
+    activeUser.set('currentBet', amountToCall);
+    table.save();
+
+    this.passActivePlayer(table);
+  },
+  raise(table, raiseAmount) {
+    var mainPot = table.get('mainPot');
+
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
+    activeUser.set('currentBet', raiseAmount);
+
+    var amountToCall = table.get('amountToCall');
+    table.set('mainPot', mainPot+raiseAmount);
+    table.set('amountToCall', amountToCall+raiseAmount);
+    table.set('lastToAct', table.get('activePlayer'));
+    table.save();
+
+    this.passActivePlayer(table);
   }
 });
