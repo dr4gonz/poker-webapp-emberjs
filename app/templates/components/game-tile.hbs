@@ -1,6 +1,6 @@
 <h1>Current street: {{table.currentStreet}}</h1>
 <div class="table">
-  {{#if dealer.mDeck}}
+  {{#if table.flopCards}}
     <div class="board">
       {{#if (eq table.currentStreet 'flop')}}
       {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
