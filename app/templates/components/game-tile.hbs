@@ -1,6 +1,8 @@
 {{#if auth.loggedIn}}
+
   <button {{action 'joinTable' table 1}}>join at seat 1</button>
   <button {{action 'joinTable' table 2}}>join at seat 2</button>
+
 {{/if}}
 <h1>Current street: {{table.currentStreet}}</h1>
 <div class="table">

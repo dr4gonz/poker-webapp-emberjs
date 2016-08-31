@@ -5,14 +5,13 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   actions: {
     createTable() {
-      debugger;
       var thisService = this;
       this.get('store').findAll('table').then(function(tableData){
         tableData.forEach(function(table){
           table.destroyRecord();
         });
           var params = {
-            name: thisService.get('name') ? name: "New Table",
+            name: thisService.get('name'),
             users: [],
             preflop: false,
             flop: false,

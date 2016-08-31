@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  model() {
+    return this.store.findAll('user');
+  },
   auth: Ember.inject.service(),
   dealer: Ember.inject.service(),
-
+  store: Ember.inject.service(),
 
   actions: {
     joinTable(table, seatNumber) {
