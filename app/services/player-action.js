@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  dealer: Ember.inject.service(),
+
   passActivePlayer(table) {
     var activePlayerIndex = table.get('activePlayer');
 
@@ -8,12 +10,16 @@ export default Ember.Service.extend({
     currentActiveUser.set('isActive',false);
     currentActiveUser.save();
 
-    activePlayerIndex++;
-    if (activePlayerIndex >= table.get('users').toArray().length) {
-      activePlayerIndex = 0;
-    }
+    var nextActiveUser;
+    do {
+      activePlayerIndex++;
+      if (activePlayerIndex >= table.get('users').toArray().length) {
+        activePlayerIndex = 0;
+      }
+      nextActiveUser = table.get('users').toArray()[activePlayerIndex];
+    } while (!nextActiveUser.get('handIsLive'));
 
-    var nextActiveUser = table.get('users').toArray()[activePlayerIndex];
+    console.log('setting '+nextActiveUser.get('name')+' to active...');
     nextActiveUser.set('isActive', true);
     nextActiveUser.save();
 
@@ -21,6 +27,7 @@ export default Ember.Service.extend({
     table.save();
     this.checkEndStreet(table);
   },
+
   checkEndStreet(table) {
     var currentStreet = table.get('currentStreet');
     if (table.get('activePlayer') === table.get('lastToAct')) {
@@ -59,6 +66,33 @@ export default Ember.Service.extend({
       return true; //true signifies that action is done for this street
     } else {
       return false; //false signifies that next player can act
+    }
+  },
+  fold(table) {
+    var activePlayer = table.get('users').toArray()[table.get('activePlayer')];
+    activePlayer.set('handIsLive', false);
+    activePlayer.save();
+
+    if (this.checkLiveHands(table)) {
+      this.passActivePlayer(table);
+    }
+  },
+  checkLiveHands(table) {
+    var liveHandCount = 0;
+    var lastLivePlayer;
+    table.get('users').toArray().forEach((player) => {
+      if (player.get('handIsLive')) {
+        lastLivePlayer = player;
+        liveHandCount++;
+      }
+    });
+    if (liveHandCount === 1) {
+      this.get('dealer').finishHand(table);
+      this.get('dealer').populateDeck(table);
+      console.log(lastLivePlayer.get('name') +" won the hand");
+      return false;
+    } else {
+      return true;
     }
   }
 });

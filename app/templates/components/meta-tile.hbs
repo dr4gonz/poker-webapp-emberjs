@@ -1,0 +1,13 @@
+<ul>
+  <li>active player: {{table.activePlayer}}</li>
+  <li>last to act: {{table.lastToAct}}</li>
+  <li>dealer: {{table.dealer}}</li>
+  <li>users</li>
+    <ul>
+      {{#each table.users as |user|}}
+        <li>name: {{user.name}}</li>
+        <li>isActive: {{user.isActive}}</li>
+        <li>handIsLive: {{user.handIsLive}}</li>
+      {{/each}}
+    </ul>
+</ul>

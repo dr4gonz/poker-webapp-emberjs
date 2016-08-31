@@ -19,6 +19,7 @@
       {{#each table.users as |user|}}
       <div class="player{{user.seat}}">
         <h2>{{user.name}}</h2>
+        <h4>Hand is live: {{user.handIsLive}}</h4>
         {{#if (eq user auth.currentUser)}}
          {{#each user.holeCards as |card|}}
           <img class="player-card" src="images/cards/{{card}}.svg">
@@ -32,10 +33,8 @@
   {{/if}}
 </div>
 {{player-action-tile user=auth.currentUser table=table}}
+  {{meta-tile table=table}}
 <ul>
   <button {{action 'dealHand' table}}>Deal Hand</button>
-  <button {{action 'dealFlop' table}}>Deal Flop</button>
-  <button {{action 'dealTurn' table}}>Deal Turn</button>
-  <button {{action 'dealRiver' table}}>Deal River</button>
   <button {{action 'finishHand' table}}>Finish Hand</button>
 </ul>

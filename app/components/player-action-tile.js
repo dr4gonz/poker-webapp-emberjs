@@ -5,6 +5,9 @@ export default Ember.Component.extend({
   actions: {
     check(table) {
       this.get('playerAction').passActivePlayer(table);
+    },
+    fold(table) {
+      this.get('playerAction').fold(table);
     }
   }
 });

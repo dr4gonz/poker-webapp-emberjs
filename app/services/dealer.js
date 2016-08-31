@@ -52,10 +52,14 @@ export default Ember.Service.extend({
     var p2Hand = [mDeck[7], mDeck[8]].concat(community);
 
     this.get('store').findAll('user').then(function(players) {
-      table.get('users').toArray()[0].set('cards', p1Hand);
-      table.get('users').toArray()[1].set('cards', p2Hand);
-      table.get('users').toArray()[0].set('holeCards', [mDeck[5], mDeck[6]]);
-      table.get('users').toArray()[1].set('holeCards', [mDeck[7], mDeck[8]]);
+      var playerOne = table.get('users').toArray()[0];
+      var playerTwo = table.get('users').toArray()[1];
+      playerOne.set('cards', p1Hand);
+      playerTwo.set('cards', p2Hand);
+      playerOne.set('holeCards', [mDeck[5], mDeck[6]]);
+      playerTwo.set('holeCards', [mDeck[7], mDeck[8]]);
+      playerOne.set('handIsLive', true);
+      playerTwo.set('handIsLive', true);
       players.save();
       thisService.findWinners().then(function(winner){
         thisService.set('winningPlayer', winner[0]);
