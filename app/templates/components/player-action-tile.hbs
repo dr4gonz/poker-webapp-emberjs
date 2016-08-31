@@ -4,6 +4,7 @@
   <button {{action 'bet' table}}>Bet $5</button>
   {{else}}
   <button {{action 'callBet' table}}>Call(${{table.amountToCall}})</button>
+  <button {{action 'raise' table}}>Raise(+$5)</button>
   <button {{action 'fold' table}}>Fold</button>
   {{/if}}
 {{/if}}

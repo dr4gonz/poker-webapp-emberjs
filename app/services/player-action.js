@@ -92,8 +92,8 @@ export default Ember.Service.extend({
     });
     if (liveHandCount === 1) {
       this.get('dealer').finishHand(table);
+      console.log(lastLivePlayer.get('name') +" won $"+table.get('mainPot'));
       this.get('dealer').populateDeck(table);
-      console.log(lastLivePlayer.get('name') +" won the hand");
       return false;
     } else {
       return true;
@@ -114,6 +114,16 @@ export default Ember.Service.extend({
     var amountToCall = table.get('amountToCall');
 
     table.set('mainPot', mainPot + amountToCall);
+    table.save();
+
+    this.passActivePlayer(table);
+  },
+  raise(table, raiseAmount) {
+    var mainPot = table.get('mainPot');
+    var amountToCall = table.get('amountToCall');
+    table.set('mainPot', mainPot+raiseAmount);
+    table.set('amountToCall', amountToCall+raiseAmount);
+    table.set('lastToAct', table.get('activePlayer'));
     table.save();
 
     this.passActivePlayer(table);

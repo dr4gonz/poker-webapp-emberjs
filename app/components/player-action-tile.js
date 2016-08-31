@@ -14,6 +14,9 @@ export default Ember.Component.extend({
     },
     callBet(table) {
       this.get('playerAction').callBet(table);
-    }
+    },
+    raise(table) {
+      this.get('playerAction').raise(table, 5);
+    },
   }
 });
