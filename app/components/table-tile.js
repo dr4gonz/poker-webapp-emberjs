@@ -9,6 +9,7 @@ export default Ember.Component.extend({
 
   actions: {
     joinTable(table) {
+      debugger;
       var currentUser = this.get('auth').currentUser;
       currentUser.set('table', table);
       currentUser.set('seat',  table.get('users').toArray().indexOf(currentUser) + 1);

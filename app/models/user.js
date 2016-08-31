@@ -7,5 +7,6 @@ export default DS.Model.extend({
   holeCards: DS.attr(),
   handIsLive: DS.attr(),
   table: DS.belongsTo(),
-  seat: DS.attr()
+  isActive: DS.attr(),
+  seat: DS.attr(),
 });

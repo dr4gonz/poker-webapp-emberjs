@@ -12,7 +12,6 @@ export default Ember.Service.extend({
   river: null,
 
   populateDeck(table) {
-    console.log(table.get('users'));
     this.set('mDeck',[]);
     var suits = ["h", "c", "d", "s"];
     var values = ["2", "3", "4","5","6","7","8","9", "T", "J", "Q","K","A"];
@@ -41,7 +40,9 @@ export default Ember.Service.extend({
   },
 
   dealHand(table) {
+    table.set('currentStreet', 'preflop');
     table.set('preflop', true);
+    this.assignDealer(table);
     table.save();
     var thisService = this;
     var mDeck = this.get('mDeck');
@@ -98,8 +99,8 @@ export default Ember.Service.extend({
       console.log(winningPlayers[0]);
       return winningPlayers;
     });
-    //
   },
+
   // function for evaluating equality of 7-card arrays
   evaluateHandEquality(firstHand, secondHand) {
     var returnValue = true;
@@ -129,6 +130,26 @@ export default Ember.Service.extend({
     table.set('flop', false);
     table.set('turn', false);
     table.set('river', false);
+    table.get('users').forEach(function(user) {
+      user.set('isActive', false);
+      user.save();
+    });
     table.save();
-  }
+  },
+  assignDealer(table) {
+    var oldActiveUser = table.get('users').toArray()[table.get('activePlayer')];
+    oldActiveUser.set('isActive', false);
+    oldActiveUser.save();
+    table.set('dealer', table.get('dealer') + 1);
+    if (table.get('dealer') >= table.get('users').toArray().length) {
+      table.set('dealer', 0);
+    }
+    var activeUser = table.get('users').toArray()[table.get('dealer')];
+    activeUser.set('isActive', true);
+    activeUser.save();
+    table.set('activePlayer', table.get('dealer'));
+    table.set('lastToAct', table.get('dealer'));
+    table.save();
+  },
+
 });

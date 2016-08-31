@@ -7,6 +7,8 @@
   <button {{action 'finishHand' table}}>Finish Hand</button>
 </ul>
 
+{{player-action-tile user=auth.currentUser table=table}}
+
 <div class="table">
   {{#if dealer.mDeck}}
     <div class="board">
@@ -15,13 +17,13 @@
         <img class="community-card" src="images/cards/{{card}}.svg">
         {{/each}}
       {{/if}}
-      {{#if (eq table.currentStreet 'flop')}}
+      {{#if (eq table.currentStreet 'turn')}}
         {{#each dealer.flop as |card|}}
           <img class="community-card" src="images/cards/{{card}}.svg">
         {{/each}}
         <img class="community-card" src="images/cards/{{dealer.turn}}.svg">
       {{/if}}
-      {{#if (eq table.currentStreet 'flop')}}
+      {{#if (eq table.currentStreet 'river')}}
         {{#each dealer.flop as |card|}}
           <img class="community-card" src="images/cards/{{card}}.svg">
         {{/each}}
