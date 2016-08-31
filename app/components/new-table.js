@@ -17,7 +17,9 @@ export default Ember.Component.extend({
         currentStreet: null,
         flopCards: [],
         turnCard: null,
-        riverCard: null
+        riverCard: null,
+        mainPot: null,
+        amountToCall: null,
       };
       var newTable = this.get('store').createRecord('table', params);
       newTable.save();

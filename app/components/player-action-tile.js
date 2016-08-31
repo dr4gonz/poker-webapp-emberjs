@@ -8,6 +8,12 @@ export default Ember.Component.extend({
     },
     fold(table) {
       this.get('playerAction').fold(table);
+    },
+    bet(table) {
+      this.get('playerAction').bet(table, 5);
+    },
+    callBet(table) {
+      this.get('playerAction').callBet(table);
     }
   }
 });

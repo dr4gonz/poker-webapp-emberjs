@@ -45,6 +45,7 @@ export default Ember.Service.extend({
           table.set('currentStreet', 'finished');
           break;
       }
+
       var activePlayerIndex = table.get('activePlayer');
       var activePlayer = table.get('users').toArray()[activePlayerIndex];
       activePlayer.set('isActive', false);
@@ -61,6 +62,7 @@ export default Ember.Service.extend({
 
       newActivePlayer.set('isActive', true);
       newActivePlayer.save();
+      table.set('amountToCall', 0);
       table.save();
 
       return true; //true signifies that action is done for this street
@@ -94,5 +96,23 @@ export default Ember.Service.extend({
     } else {
       return true;
     }
+  },
+  bet(table, betAmount) {
+    var mainPot = table.get('mainPot');
+
+    table.set('mainPot', mainPot + betAmount);
+    table.set('amountToCall', betAmount);
+    table.save();
+
+    this.passActivePlayer(table);
+  },
+  callBet(table) {
+    var mainPot = table.get('mainPot');
+    var amountToCall = table.get('amountToCall');
+
+    table.set('mainPot', mainPot + amountToCall);
+    table.save();
+
+    this.passActivePlayer(table);
   }
 });

@@ -1,4 +1,9 @@
 {{#if user.isActive}}
+  {{#if (eq table.amountToCall 0)}}
   <button {{action 'check' table}}>Check</button>
+  <button {{action 'bet' table}}>Bet $5</button>
+  {{else}}
+  <button {{action 'callBet' table}}>Call(${{table.amountToCall}})</button>
   <button {{action 'fold' table}}>Fold</button>
+  {{/if}}
 {{/if}}

@@ -41,6 +41,8 @@ export default Ember.Service.extend({
   dealHand(table) {
     table.set('currentStreet', 'preflop');
     table.set('preflop', true);
+    table.set('amountToCall', 0);
+    table.set('mainPot', 0);
     this.assignDealer(table);
     table.save();
     var thisService = this;
