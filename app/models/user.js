@@ -10,4 +10,5 @@ export default DS.Model.extend({
   isActive: DS.attr(),
   seat: DS.attr(),
   currentBet: DS.attr(),
+  chips: DS.attr(),
 });

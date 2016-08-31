@@ -156,9 +156,9 @@ export default Ember.Service.extend({
     table.save();
   },
   awardPot(table, winningPlayer) {
-    // var thisService = this;
-    // winningPlayer.set('chips', table.get('mainPot'));
-    console.log(winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");
+    winningPlayer.set('chips', table.get('mainPot') + winningPlayer.get('chips'));
+    winningPlayer.save();
+    alert(winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");
     table.set('mainPot', 0);
     table.save();
     this.populateDeck(table);

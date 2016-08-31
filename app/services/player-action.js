@@ -19,7 +19,6 @@ export default Ember.Service.extend({
       nextActiveUser = table.get('users').toArray()[activePlayerIndex];
     } while (!nextActiveUser.get('handIsLive'));
 
-    console.log('setting '+nextActiveUser.get('name')+' to active...');
     nextActiveUser.set('isActive', true);
     nextActiveUser.save();
 
@@ -97,7 +96,7 @@ export default Ember.Service.extend({
     });
     if (liveHandCount === 1) {
       this.get('dealer').finishHand(table);
-      console.log(lastLivePlayer.get('name') +" won $"+table.get('mainPot'));
+      this.get('dealer').awardPot(table, lastLivePlayer);
       this.get('dealer').populateDeck(table);
       return false;
     } else {
@@ -107,6 +106,7 @@ export default Ember.Service.extend({
   bet(table, betAmount) {
     var mainPot = table.get('mainPot');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('chips', (activeUser.get('chips')-betAmount));
     activeUser.set('currentBet', betAmount);
     activeUser.save();
     table.set('mainPot', mainPot + betAmount);
@@ -119,10 +119,10 @@ export default Ember.Service.extend({
   callBet(table) {
     var mainPot = table.get('mainPot');
     var amountToCall = table.get('amountToCall');
-
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
 
-    table.set('mainPot', mainPot + (amountToCall - activeUser.get('currentBet')));
+    table.set('mainPot', (mainPot + (amountToCall - activeUser.get('currentBet'))));
+    activeUser.set('chips', (activeUser.get('chips')-(amountToCall - activeUser.get('currentBet'))));
     activeUser.set('currentBet', amountToCall);
     table.save();
 
@@ -132,6 +132,7 @@ export default Ember.Service.extend({
     var mainPot = table.get('mainPot');
 
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
     activeUser.set('currentBet', raiseAmount);
 
     var amountToCall = table.get('amountToCall');

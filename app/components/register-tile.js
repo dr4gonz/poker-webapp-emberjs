@@ -50,6 +50,7 @@ export default Ember.Component.extend({
           isActive: false,
           seat: null,
           currentBet: null,
+          chips: 3000,
         };
         this.set('name', '');
         this.set('pw', '');
