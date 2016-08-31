@@ -47,6 +47,9 @@ export default Ember.Service.extend({
     var thisService = this;
     var mDeck = this.get('mDeck');
     var community = [mDeck[0], mDeck[1], mDeck[2], mDeck[3], mDeck[4]];
+    table.set('flopCards', [mDeck[0], mDeck[1], mDeck[2]]);
+    table.set('turnCard', mDeck[3]);
+    table.set('riverCard', mDeck[4]);
     this.set('community', community);
     var p1Hand = [mDeck[5], mDeck[6]].concat(community);
     var p2Hand = [mDeck[7], mDeck[8]].concat(community);

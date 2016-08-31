@@ -11,4 +11,7 @@ export default DS.Model.extend({
   activePlayer: DS.attr(),
   lastToAct: DS.attr(),
   currentStreet: DS.attr(),
+  flopCards: DS.attr(),
+  turnCard: DS.attr(),
+  riverCard: DS.attr()
 });

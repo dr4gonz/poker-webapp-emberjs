@@ -3,16 +3,16 @@
   {{#if dealer.mDeck}}
     <div class="board">
       {{#if (eq table.currentStreet 'flop')}}
-      {{#each dealer.flop as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
       {{/if}}
       {{#if (eq table.currentStreet 'turn')}}
-      {{#each dealer.flop as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-      <img class="community-card" src="images/cards/{{dealer.turn}}.svg">
+      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+      <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
       {{/if}}
       {{#if (eq table.currentStreet 'river')}}
-      {{#each dealer.flop as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-      <img class="community-card" src="images/cards/{{dealer.turn}}.svg">
-      <img class="community-card" src="images/cards/{{dealer.river}}.svg">
+      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+      <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
+      <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
       {{/if}}
     </div>
 
