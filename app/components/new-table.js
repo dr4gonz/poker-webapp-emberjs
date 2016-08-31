@@ -12,7 +12,7 @@ export default Ember.Component.extend({
           table.destroyRecord();
         });
           var params = {
-            name: thisService.get('name'),
+            name: thisService.get('name') ? name: "New Table",
             users: [],
             preflop: false,
             flop: false,
@@ -24,7 +24,9 @@ export default Ember.Component.extend({
             currentStreet: null,
             flopCards: [],
             turnCard: null,
-            riverCard: null
+            riverCard: null,
+            mainPot: null,
+            amountToCall: null,
           };
         var newTable = thisService.get('store').createRecord('table', params);
         newTable.save();

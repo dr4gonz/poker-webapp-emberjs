@@ -49,6 +49,8 @@ export default Ember.Component.extend({
           holeCards: [],
           isActive: false,
           seat: null,
+          currentBet: null,
+          chips: 3000,
         };
         this.set('name', '');
         this.set('pw', '');
