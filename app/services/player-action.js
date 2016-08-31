@@ -29,6 +29,7 @@ export default Ember.Service.extend({
   },
 
   checkEndStreet(table) {
+    var thisService = this;
     var currentStreet = table.get('currentStreet');
     if (table.get('activePlayer') === table.get('lastToAct')) {
       switch (currentStreet) {
@@ -43,6 +44,7 @@ export default Ember.Service.extend({
           break;
         case "river":
           table.set('currentStreet', 'finished');
+          thisService.get('dealer').findWinners(table);
           break;
       }
 
@@ -102,6 +104,7 @@ export default Ember.Service.extend({
 
     table.set('mainPot', mainPot + betAmount);
     table.set('amountToCall', betAmount);
+    table.set('lastToAct', table.get('activePlayer'));
     table.save();
 
     this.passActivePlayer(table);
