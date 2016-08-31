@@ -20,11 +20,9 @@
       <div class="player{{user.seat}}">
         <h2>{{user.name}}</h2>
         {{#if (eq user auth.currentUser)}}
-          {{player-action-tile user=user table=table}}
-          {{#if preflop}} {{#each user.holeCards as |card|}}
+         {{#each user.holeCards as |card|}}
           <img class="player-card" src="images/cards/{{card}}.svg">
           {{/each}}
-          {{/if}}
         {{else}}
         <img class="player-card" src="images/cards/back.png">
         <img class="player-card" src="images/cards/back.png">
@@ -33,38 +31,8 @@
       {{/each}}
   {{/if}}
 </div>
+{{player-action-tile user=auth.currentUser table=table}}
 <ul>
-  <button {{action 'dealHand' table}}>Deal Hand</button>
-  <button {{action 'dealFlop' table}}>Deal Flop</button>
-  <button {{action 'dealTurn' table}}>Deal Turn</button>
-  <button {{action 'dealRiver' table}}>Deal River</button>
-  <button {{action 'finishHand' table}}>Finish Hand</button>
-</ul>
-
-<!-- OLD VERSION -->
-
-<h1>Current street: {{table.currentStreet}}</h1>
-<ul>
-  {{#if (eq table.currentStreet 'flop')}}
-    {{#each dealer.flop as |card|}}{{card}}{{/each}}
-  {{/if}}
-  {{#if (eq table.currentStreet 'turn')}}
-    {{#each dealer.flop as |card|}}{{card}}{{/each}}
-    {{dealer.turn}}
-  {{/if}}
-  {{#if (eq table.currentStreet 'river')}}
-    {{#each dealer.flop as |card|}}{{card}}{{/each}}
-    {{dealer.turn}}
-    {{dealer.river}}
-  {{/if}}
-  {{#each table.users as |user|}}
-    <li>{{user.name}}
-      {{#if table.preflop}}
-        {{#if (eq user auth.currentUser)}} - {{#each user.holeCards as |card|}}
-          {{card}}
-      {{/each}}{{player-action-tile user=user table=table}}{{/if}}{{/if}}
-    </li>
-  {{/each}}
   <button {{action 'dealHand' table}}>Deal Hand</button>
   <button {{action 'dealFlop' table}}>Deal Flop</button>
   <button {{action 'dealTurn' table}}>Deal Turn</button>
