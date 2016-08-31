@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   actions: {
     createTable() {
+      debugger;
       var thisService = this;
       this.get('store').findAll('table').then(function(tableData){
         tableData.forEach(function(table){

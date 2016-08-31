@@ -6,6 +6,14 @@ export default Ember.Component.extend({
 
 
   actions: {
+    joinTable(table, seatNumber) {
+      var currentUser = this.get('auth').currentUser;
+      currentUser.set('table', table);
+      currentUser.set('seat',  seatNumber);
+      currentUser.save().then(function(){
+        table.save();
+      });
+    },
     dealHand(table) {
       this.get('dealer').populateDeck(table);
     },
