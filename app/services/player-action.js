@@ -31,6 +31,7 @@ export default Ember.Service.extend({
   checkEndStreet(table) {
     var thisService = this;
     var currentStreet = table.get('currentStreet');
+    var users = table.get('users').toArray();
     if (table.get('activePlayer') === table.get('lastToAct')) {
       switch (currentStreet) {
         case "preflop":
@@ -64,6 +65,10 @@ export default Ember.Service.extend({
 
       newActivePlayer.set('isActive', true);
       newActivePlayer.save();
+      users.forEach((user) => {
+        user.set('currentBet', 0);
+        user.save();
+      });
       table.set('amountToCall', 0);
       table.save();
 
@@ -101,7 +106,9 @@ export default Ember.Service.extend({
   },
   bet(table, betAmount) {
     var mainPot = table.get('mainPot');
-
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('currentBet', betAmount);
+    activeUser.save();
     table.set('mainPot', mainPot + betAmount);
     table.set('amountToCall', betAmount);
     table.set('lastToAct', table.get('activePlayer'));
@@ -113,13 +120,20 @@ export default Ember.Service.extend({
     var mainPot = table.get('mainPot');
     var amountToCall = table.get('amountToCall');
 
-    table.set('mainPot', mainPot + amountToCall);
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+
+    table.set('mainPot', mainPot + (amountToCall - activeUser.get('currentBet')));
+    activeUser.set('currentBet', amountToCall);
     table.save();
 
     this.passActivePlayer(table);
   },
   raise(table, raiseAmount) {
     var mainPot = table.get('mainPot');
+
+    var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    activeUser.set('currentBet', raiseAmount);
+
     var amountToCall = table.get('amountToCall');
     table.set('mainPot', mainPot+raiseAmount);
     table.set('amountToCall', amountToCall+raiseAmount);

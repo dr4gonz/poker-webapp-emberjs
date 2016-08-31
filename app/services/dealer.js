@@ -63,6 +63,8 @@ export default Ember.Service.extend({
       playerTwo.set('holeCards', [mDeck[7], mDeck[8]]);
       playerOne.set('handIsLive', true);
       playerTwo.set('handIsLive', true);
+      playerOne.set('currentBet', 0);
+      playerTwo.set('currentBet', 0);
       players.save();
       thisService.set('p1HoleCards',[mDeck[5], mDeck[6]]);
       thisService.set('p2HoleCards',[mDeck[7], mDeck[8]]);

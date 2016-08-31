@@ -1,10 +1,14 @@
 {{#if user.isActive}}
   {{#if (eq table.amountToCall 0)}}
   <button {{action 'check' table}}>Check</button>
-  <button {{action 'bet' table}}>Bet $5</button>
+  <button {{action 'bet' table}}>Bet</button>
+  {{input value=betAmount placeholder="Bet Amount" type="number"}}
   {{else}}
-  <button {{action 'callBet' table}}>Call(${{table.amountToCall}})</button>
-  <button {{action 'raise' table}}>Raise(+$5)</button>
-  <button {{action 'fold' table}}>Fold</button>
+  <button {{action 'callBet' table}}>Call(${{amount-to-call table.amountToCall user.currentBet}})</button>
+    {{#unless (eq table.amountToCall 0)}}
+      <button {{action 'raise' table}}>Raise to:</button>
+      {{input value=raiseAmount placeholder="Raise Amount" type="number"}}
+    {{/unless}}
+    <button {{action 'fold' table}}>Fold</button>
   {{/if}}
 {{/if}}
