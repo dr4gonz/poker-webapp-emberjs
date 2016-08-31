@@ -135,7 +135,6 @@ export default Ember.Service.extend({
       var bettingPlayer = table.get('users').toArray()[table.get('lastToAct')];
       bettingPlayer.set('chips', bettingPlayer.get('chips') + (uncalledChips));
       table.set('mainPot', (table.get('mainPot') - uncalledChips * 2));
-      alert("This should set main pot to 6k; actual value: "+ table.get('mainPot'));
       activeUser.set('chips', 0);
       bettingPlayer.save();
     }
