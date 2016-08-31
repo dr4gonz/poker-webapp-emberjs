@@ -20,7 +20,6 @@ export default Ember.Service.extend({
         this.get('mDeck').push(values[j]+suits[i]);
       }
     }
-    console.log(this.get('mDeck'));
     this.set('mDeck', this.shuffle(this.get('mDeck')));
     this.dealHand(table);
   },
@@ -103,7 +102,6 @@ export default Ember.Service.extend({
       if (winningPlayers.length === 2) {
         alert ("Tie!");
       }
-      console.log(winningPlayers[0]);
       return winningPlayers;
     });
   },
