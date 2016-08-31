@@ -106,15 +106,21 @@ export default Ember.Service.extend({
   bet(table, betAmount) {
     var mainPot = table.get('mainPot');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
-    activeUser.set('chips', (activeUser.get('chips')-betAmount));
-    activeUser.set('currentBet', betAmount);
-    activeUser.save();
-    table.set('mainPot', mainPot + betAmount);
-    table.set('amountToCall', betAmount);
-    table.set('lastToAct', table.get('activePlayer'));
-    table.save();
+    if (betAmount > activeUser.get('chips')){
+      alert('INVALID BET');
+    } else {
 
-    this.passActivePlayer(table);
+      activeUser.set('chips', (activeUser.get('chips')-betAmount));
+      activeUser.set('currentBet', betAmount);
+      activeUser.save();
+
+      table.set('mainPot', mainPot + betAmount);
+      table.set('amountToCall', betAmount);
+      table.set('lastToAct', table.get('activePlayer'));
+      table.save();
+
+      this.passActivePlayer(table);
+    }
   },
   callBet(table) {
     var mainPot = table.get('mainPot');
@@ -123,6 +129,16 @@ export default Ember.Service.extend({
 
     table.set('mainPot', (mainPot + (amountToCall - activeUser.get('currentBet'))));
     activeUser.set('chips', (activeUser.get('chips')-(amountToCall - activeUser.get('currentBet'))));
+
+    if (activeUser.get('chips') <= 0) {
+      var uncalledChips = (activeUser.get('chips') * -1);
+      var bettingPlayer = table.get('users').toArray()[table.get('lastToAct')];
+      bettingPlayer.set('chips', bettingPlayer.get('chips') + (uncalledChips));
+      table.set('mainPot', (table.get('mainPot') - uncalledChips * 2));
+      alert("This should set main pot to 6k; actual value: "+ table.get('mainPot'));
+      activeUser.set('chips', 0);
+      bettingPlayer.save();
+    }
     activeUser.set('currentBet', amountToCall);
     table.save();
 
@@ -130,17 +146,20 @@ export default Ember.Service.extend({
   },
   raise(table, raiseAmount) {
     var mainPot = table.get('mainPot');
-
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
-    activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
-    activeUser.set('currentBet', raiseAmount);
+    if (raiseAmount > activeUser.get('chips')) {
+      alert('INVALID BET');
+    } else {
+      activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
+      activeUser.set('currentBet', raiseAmount);
 
-    var amountToCall = table.get('amountToCall');
-    table.set('mainPot', mainPot+raiseAmount);
-    table.set('amountToCall', amountToCall+raiseAmount);
-    table.set('lastToAct', table.get('activePlayer'));
-    table.save();
+      var amountToCall = table.get('amountToCall');
+      table.set('mainPot', mainPot+raiseAmount);
+      table.set('amountToCall', amountToCall+raiseAmount);
+      table.set('lastToAct', table.get('activePlayer'));
+      table.save();
 
-    this.passActivePlayer(table);
-  }
+      this.passActivePlayer(table);
+    }
+  },
 });

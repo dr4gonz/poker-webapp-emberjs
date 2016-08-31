@@ -14,6 +14,9 @@
       <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
       <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
       {{/if}}
+      {{#if table.mainPot}}
+        <p class="pot-string">Pot: ${{table.mainPot}}</p>
+      {{/if}}
     </div>
 
       {{#each table.users as |user|}}
