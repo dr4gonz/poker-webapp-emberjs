@@ -15,5 +15,7 @@ export default DS.Model.extend({
   turnCard: DS.attr(),
   riverCard: DS.attr(),
   mainPot: DS.attr(),
-  amountToCall: DS.attr()
+  amountToCall: DS.attr(),
+  playerAllIn: DS.attr(),
+  allInAndCall: DS.attr(),
 });

@@ -38,6 +38,8 @@ export default Ember.Service.extend({
   },
 
   dealHand(table) {
+    table.set('playerAllIn', false);
+    table.set('allInAndCall', false);
     table.set('currentStreet', 'preflop');
     table.set('preflop', true);
     table.set('amountToCall', 0);
@@ -100,7 +102,7 @@ export default Ember.Service.extend({
         alert ("Tie!");
       }
       // console.log(winningPlayers[0].get('name'));
-      console.log("winningPlayers[0]", winningPlayers[0])
+      console.log("winningPlayers[0]", winningPlayers[0]);
       thisService.awardPot(table, winningPlayers[0]);
     });
   },
@@ -156,6 +158,7 @@ export default Ember.Service.extend({
     table.save();
   },
   awardPot(table, winningPlayer) {
+    table.set('allInAndCall', false);
     winningPlayer.set('chips', table.get('mainPot') + winningPlayer.get('chips'));
     winningPlayer.save();
     alert(winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");

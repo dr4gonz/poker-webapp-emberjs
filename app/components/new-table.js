@@ -20,6 +20,8 @@ export default Ember.Component.extend({
         riverCard: null,
         mainPot: null,
         amountToCall: null,
+        playerAllIn: false,
+        allInAndCall: false,
       };
       var newTable = this.get('store').createRecord('table', params);
       newTable.save();

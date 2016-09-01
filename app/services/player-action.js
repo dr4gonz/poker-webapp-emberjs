@@ -25,6 +25,11 @@ export default Ember.Service.extend({
     table.set('activePlayer', activePlayerIndex);
     table.save();
     this.checkEndStreet(table);
+
+    if (table.get('allInAndCall')) {
+      alert('wait 3 seconds here...');
+      this.passActivePlayer(table);
+    }
   },
 
   checkEndStreet(table) {
@@ -109,6 +114,9 @@ export default Ember.Service.extend({
     if (betAmount > activeUser.get('chips')){
       alert('INVALID BET');
     } else {
+      if (betAmount === activeUser.get('chips')) {
+        table.set('playerAllIn', true);
+      }
 
       activeUser.set('chips', (activeUser.get('chips')-betAmount));
       activeUser.set('currentBet', betAmount);
@@ -135,10 +143,15 @@ export default Ember.Service.extend({
       var bettingPlayer = table.get('users').toArray()[table.get('lastToAct')];
       bettingPlayer.set('chips', bettingPlayer.get('chips') + (uncalledChips));
       table.set('mainPot', (table.get('mainPot') - uncalledChips * 2));
+      table.set('playerAllIn', true);
       activeUser.set('chips', 0);
       bettingPlayer.save();
     }
     activeUser.set('currentBet', amountToCall);
+
+    if (table.get('playerAllIn')) {
+      table.set('allInAndCall', true);
+    }
     table.save();
 
     this.passActivePlayer(table);
@@ -149,6 +162,9 @@ export default Ember.Service.extend({
     if (raiseAmount > activeUser.get('chips')) {
       alert('INVALID BET');
     } else {
+      if (betAmount === activeUser.get('chips')) {
+        table.set('playerAllIn', true);
+      }
       activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
       activeUser.set('currentBet', raiseAmount);
 
@@ -160,5 +176,8 @@ export default Ember.Service.extend({
 
       this.passActivePlayer(table);
     }
+  },
+  runAllIn(table) {
+    this.checkEndStreet(table);
   },
 });
