@@ -1,11 +1,9 @@
 {{table.name}}
 {{#if auth.loggedIn}}
-  <button {{action 'joinTable' table}}>Join Table</button>
+  <button {{action 'leaveTable' table}}>Leave Table</button>
 {{/if}}
 {{#each table.users as |user|}}
   {{user.name}}
 {{/each}}
 
-{{#if showGameTile}}
-  {{game-tile table=table}}
-{{/if}}
+{{game-tile table=table users=users}}

@@ -1,0 +1,14 @@
+
+<div class="player{{user.seat}}">
+  <h2>{{user.name}}</h2>
+  {{#if user.holeCards}}
+    {{#if (eq user auth.currentUser)}}
+     {{#each user.holeCards as |card|}}
+      <img class="player-card" src="images/cards/{{card}}.svg">
+      {{/each}}
+    {{else}}
+    <img class="player-card" src="images/cards/back.png">
+    <img class="player-card" src="images/cards/back.png">
+    {{/if}}
+  {{/if}}
+</div>

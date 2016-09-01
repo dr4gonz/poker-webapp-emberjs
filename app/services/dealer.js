@@ -99,8 +99,6 @@ export default Ember.Service.extend({
       if (winningPlayers.length === 2) {
         alert ("Tie!");
       }
-      // console.log(winningPlayers[0].get('name'));
-      console.log("winningPlayers[0]", winningPlayers[0])
       thisService.awardPot(table, winningPlayers[0]);
     });
   },
@@ -130,12 +128,18 @@ export default Ember.Service.extend({
     table.save();
   },
   finishHand(table) {
+    table.set('currentStreet', "none");
     table.set('preflop', false);
     table.set('flop', false);
     table.set('turn', false);
     table.set('river', false);
-    table.get('users').forEach(function(user) {
+    table.get('users').toArray().forEach(function(user) {
+      console.log('resetting user...');
       user.set('isActive', false);
+      user.set('holeCards', null);
+      user.set('cards', null);
+      user.set('handIsLive', false);
+      user.set('currentBet', 0);
       user.save();
     });
     table.save();

@@ -1,43 +1,40 @@
+{{#unless auth.currentUser.seat}}
+  {{#if auth.loggedIn}}
+    {{#unless table.seatOneOccupied}}
+      <button {{action 'joinTable' table 1}}>sit down at seat 1</button>
+    {{/unless}}
+    {{#unless table.seatTwoOccupied}}
+      <button {{action 'joinTable' table 2}}>sit down at seat 2</button>
+    {{/unless}}
+  {{/if}}
+{{/unless}}
 <h1>Current street: {{table.currentStreet}}</h1>
 <div class="table">
   {{#if table.flopCards}}
     <div class="board">
       {{#if (eq table.currentStreet 'flop')}}
-      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
       {{/if}}
       {{#if (eq table.currentStreet 'turn')}}
-      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-      <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
+        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+        <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
       {{/if}}
       {{#if (eq table.currentStreet 'river')}}
-      {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-      <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
-      <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
-      {{/if}}
-      {{#if table.mainPot}}
-        <p class="pot-string">Pot: ${{table.mainPot}}</p>
+        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+        <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
+        <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
       {{/if}}
     </div>
-
-      {{#each table.users as |user|}}
-      <div class="player{{user.seat}}">
-        <h2>{{user.name}}</h2>
-        <h4>Hand is live: {{user.handIsLive}}</h4>
-        <h4>Chips: {{user.chips}}</h4>
-        {{#if (eq user auth.currentUser)}}
-         {{#each user.holeCards as |card|}}
-          <img class="player-card" src="images/cards/{{card}}.svg">
-          {{/each}}
-        {{else}}
-        <img class="player-card" src="images/cards/back.png">
-        <img class="player-card" src="images/cards/back.png">
-        {{/if}}
-      </div>
-      {{/each}}
   {{/if}}
+  {{#each table.users as |user|}}
+    {{#if user.seat}}
+      {{player-tile user=user}}
+    {{/if}}
+  {{/each}}
 </div>
+
 {{player-action-tile user=auth.currentUser table=table}}
-  {{meta-tile table=table}}
+{{meta-tile table=table}}
 <ul>
   <button {{action 'dealHand' table}}>Deal Hand</button>
   <button {{action 'finishHand' table}}>Finish Hand</button>
