@@ -168,11 +168,25 @@ export default Ember.Service.extend({
       table.set('amountToCall', amountToCall+raiseAmount);
       table.set('lastToAct', table.get('activePlayer'));
       table.save();
-
-      this.passActivePlayer(table);
     }
+    this.passActivePlayer(table);
   },
-  runAllIn(table) {
-    this.checkEndStreet(table);
+  leaveTable(table, leavingUser) {
+    // leavingUser: player who is standing up
+    leavingUser.set('handIsLive', false);
+    leavingUser.save();
+    var winningPlayer;
+    table.get('users').toArray().forEach(function(user) {
+      console.log(leavingUser === user);
+      if (user !== leavingUser) {
+        winningPlayer = user;
+      }
+    });
+    winningPlayer.set('chips', table.get('mainPot') + winningPlayer.get('chips'));
+    winningPlayer.save();
+    alert(leavingUser.get('name') + "left the table. "+winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");
+    table.set('mainPot', 0);
+    table.save();
+    this.get('dealer').finishHand(table);
   },
 });

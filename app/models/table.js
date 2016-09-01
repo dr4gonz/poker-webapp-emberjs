@@ -18,4 +18,6 @@ export default DS.Model.extend({
   amountToCall: DS.attr(),
   playerAllIn: DS.attr(),
   allInAndCall: DS.attr(),
+  seatOneOccupied: DS.attr(),
+  seatTwoOccupied: DS.attr(),
 });

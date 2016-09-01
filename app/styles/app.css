@@ -3,11 +3,28 @@
   background-color: lightgrey;
   max-width: 60px;
 }
-
-.jumbotron {
+body {
   background-image: url(".././images/cards/Casino.jpg");
-  background-position: 0%;
+  background-repeat: repeat;
+  background-position: bottom;
+  color: white;
+}
+.jumbotron {
+  background-image: url(".././images/cards/flush.jpg");
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-bottom: black solid 5px;
+  margin-top: -3%;
+}
+input, button {
+  color: black;
+}
 
+.jumbotron h1 {
+  color: yellow;
+  font-family: Abril Fatface;
+  text-shadow: 0 0 0.5em yellow;
 }
 
 .form-link:hover {
@@ -45,18 +62,24 @@
 
 .player1 {
   position: relative;
-  top: 20%;
-  left: 0%;
+  top: 50px;
+  left: 5%;
   color: white;
 }
 
 .player2 {
   position: relative;
-  top: -10%;
-  left: 82.5%;
+  top: 225px;
+  left: 78.5%;
   color: white;
 }
 .pot-string {
   font-size: 2em;
   color: white;
+}
+
+.logged {
+  color: yellow;
+  font-family: Helvetica;
+  font-size: 20px;
 }
