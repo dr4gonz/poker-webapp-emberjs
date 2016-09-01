@@ -62,14 +62,14 @@ input, button {
 
 .player1 {
   position: relative;
-  top: 50px;
-  left: 5%;
+  top: 200px;
+  left: -10%;
   color: white;
 }
 
 .player2 {
   position: relative;
-  top: 225px;
+  top: 30px;
   left: 78.5%;
   color: white;
 }
@@ -82,4 +82,17 @@ input, button {
   color: yellow;
   font-family: Helvetica;
   font-size: 20px;
+}
+
+.avatar {
+ height: 150px;
+ width: 110px;
+
+}
+
+.player-avatar {
+  height: 100px;
+  width: 90px;
+  float: left;
+  border: solid black 5px;
 }

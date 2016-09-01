@@ -11,6 +11,10 @@
     <div class="form-group">
       {{input value=pwConf id="pwConf" type="password" placeholder="confirm password"}}
     </div>
+    
+    <div class="form-group">
+      {{input value=avatar id="avatar" type="text" placeholder="avatar"}}
+    </div>
     <button class="btn btn-sm btn-primary" {{action 'registerUser' users}}>register</button>
   </form>
   {{#if failedRegister}}

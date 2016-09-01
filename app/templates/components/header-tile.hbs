@@ -16,6 +16,7 @@
   <div class="col-md-4 text-center auth-text">
     {{#if auth.loggedIn}}
     <h4 class="logged">logged in as <span class="highlight">{{auth.currentUser.name}}</span></h4>
+    <img class="avatar" src="{{auth.currentUser.avatar}}" alt="" />
     <button class="btn btn-lg btn-success" {{action 'logOut'}}>logout</button>
     {{else}}
     <button class="btn btn-lg btn-success" {{action 'showLoginForm'}}>log in</button>
