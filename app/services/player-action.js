@@ -161,4 +161,6 @@ export default Ember.Service.extend({
       this.passActivePlayer(table);
     }
   },
+
+  
 });
