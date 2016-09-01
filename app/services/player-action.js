@@ -129,7 +129,7 @@ export default Ember.Service.extend({
 
     table.set('mainPot', (mainPot + (amountToCall - activeUser.get('currentBet'))));
     activeUser.set('chips', (activeUser.get('chips')-(amountToCall - activeUser.get('currentBet'))));
-
+    //provides a check to see if this call puts user all-in. Returns un-called chips.
     if (activeUser.get('chips') <= 0) {
       var uncalledChips = (activeUser.get('chips') * -1);
       var bettingPlayer = table.get('users').toArray()[table.get('lastToAct')];
