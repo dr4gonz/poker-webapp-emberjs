@@ -25,11 +25,6 @@ export default Ember.Service.extend({
     table.set('activePlayer', activePlayerIndex);
     table.save();
     this.checkEndStreet(table);
-
-    if (table.get('allInAndCall')) {
-      alert('wait 3 seconds here...');
-      this.passActivePlayer(table);
-    }
   },
 
   checkEndStreet(table) {
@@ -160,7 +155,7 @@ export default Ember.Service.extend({
     var mainPot = table.get('mainPot');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
     if (raiseAmount > activeUser.get('chips')) {
-      alert('INVALID BET');
+      alert('INVALID RAISE');
     } else {
       if (betAmount === activeUser.get('chips')) {
         table.set('playerAllIn', true);

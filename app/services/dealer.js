@@ -97,12 +97,9 @@ export default Ember.Service.extend({
           winningPlayers.push(player);
         }
       });
-      //do something with winningPlayer
       if (winningPlayers.length === 2) {
         alert ("Tie!");
       }
-      // console.log(winningPlayers[0].get('name'));
-      console.log("winningPlayers[0]", winningPlayers[0]);
       thisService.awardPot(table, winningPlayers[0]);
     });
   },
@@ -159,11 +156,13 @@ export default Ember.Service.extend({
   },
   awardPot(table, winningPlayer) {
     table.set('allInAndCall', false);
+    table.set('playerAllIn', false);
     winningPlayer.set('chips', table.get('mainPot') + winningPlayer.get('chips'));
     winningPlayer.save();
     alert(winningPlayer.get('name') + " won " + table.get('mainPot')+ " chips!");
     table.set('mainPot', 0);
     table.save();
+    this.finishHand(table);
     this.populateDeck(table);
   }
 
