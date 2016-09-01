@@ -26,6 +26,8 @@ export default Ember.Component.extend({
             riverCard: null,
             mainPot: null,
             amountToCall: null,
+            seatOneOccupied: false,
+            seatTwoOccupied: false,
           };
         var newTable = thisService.get('store').createRecord('table', params);
         newTable.save();

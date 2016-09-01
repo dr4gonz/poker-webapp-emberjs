@@ -1,9 +1,13 @@
-{{#if auth.loggedIn}}
-
-  <button {{action 'joinTable' table 1}}>join at seat 1</button>
-  <button {{action 'joinTable' table 2}}>join at seat 2</button>
-
-{{/if}}
+{{#unless auth.currentUser.seat}}
+  {{#if auth.loggedIn}}
+    {{#unless table.seatOneOccupied}}
+      <button {{action 'joinTable' table 1}}>sit down at seat 1</button>
+    {{/unless}}
+    {{#unless table.seatTwoOccupied}}
+      <button {{action 'joinTable' table 2}}>sit down at seat 2</button>
+    {{/unless}}
+  {{/if}}
+{{/unless}}
 <h1>Current street: {{table.currentStreet}}</h1>
 <div class="table">
   {{#if table.flopCards}}
@@ -21,13 +25,12 @@
     <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
     {{/if}}
   </div>
+  {{/if}}
   {{#each table.users as |user|}}
   {{#if user.seat}}
   {{player-tile user=user}}
   {{/if}}
   {{/each}}
-
-  {{/if}}
 </div>
 
 {{player-action-tile user=auth.currentUser table=table}}
