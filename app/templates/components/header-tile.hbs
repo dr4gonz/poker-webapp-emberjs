@@ -1,6 +1,6 @@
 <div class="row jumbotron page-header">
-  <div class="col-md-4 page-header text-center">
-    {{#link-to 'index'}}<h1>poker</h1>{{/link-to}}
+  <div class="col-md-4 text-center">
+    <h1>Heads Up Poker</h1>
   </div>
   <div class="col-md-4">
     <div class="form-container">
@@ -15,11 +15,11 @@
   </div>
   <div class="col-md-4 text-center auth-text">
     {{#if auth.loggedIn}}
-    <h4>logged in as <span class="highlight">{{auth.currentUser.name}}</span></h4>
-    <h4 class="form-link" {{action 'logOut'}}>logout</h4>
+    <h4 class="logged">logged in as <span class="highlight">{{auth.currentUser.name}}</span></h4>
+    <button class="btn btn-lg btn-success" {{action 'logOut'}}>logout</button>
     {{else}}
-    <h4 class="form-link" {{action 'showLoginForm'}}>login</h4>
-    <h4 class="form-link" {{action 'showRegisterForm'}}>register</h4>
+    <button class="btn btn-lg btn-success" {{action 'showLoginForm'}}>log in</button>
+    <button class="btn btn-lg btn-success" {{action 'showRegisterForm'}}>register</button>
     {{/if}}
   </div>
 </div>
