@@ -38,23 +38,32 @@ export default Ember.Service.extend({
   },
 
   dealHand(table) {
-
+    this.assignDealer(table);
+    table.save();
     var users = table.get('users').toArray();
+    var status = table.get('statusMessage');
+    var dealerIndex = table.get('dealer');
+    var bigBlindIndex = dealerIndex + 1;
+    if (bigBlindIndex === 2) {
+      bigBlindIndex = 0;
+    }
 
-    if (users[1].get('chips') <= 0) {
-      table.set('statusMessage', users[1].get('name') + " is out of chips!");
+    var smallBlind = users[dealerIndex];
+    var bigBlind = users[bigBlindIndex];
+
+    if (smallBlind.get('chips') < 5) {
+      table.set('statusMessage', (status + "... " + smallBlind.get('name') + " doesn't have enough chips to continue!"));
       table.save();
-    } else if (users[0].get('chips') <= 0) {
-      table.set('statusMessage', users[0].get('name') + " is out of chips!");
+    } else if (bigBlind.get('chips') < 10) {
+      table.set('statusMessage', (status + "... " + bigBlind.get('name') + " doesn't have enough chips to continue!"));
       table.save();
     } else {
       table.set('playerAllIn', false);
       table.set('allInAndCall', false);
       table.set('currentStreet', 'preflop');
       table.set('preflop', true);
-      table.set('amountToCall', 0);
-      table.set('mainPot', 0);
-      this.assignDealer(table);
+      table.set('amountToCall', 10);
+      table.set('mainPot', 15);
       table.save();
       var thisService = this;
       var mDeck = this.get('mDeck');
@@ -67,6 +76,10 @@ export default Ember.Service.extend({
       var p2Hand = [mDeck[7], mDeck[8]].concat(community);
 
       this.get('store').findAll('user').then(function(players) {
+        bigBlind.set('currentBet', 10);
+        bigBlind.save();
+        smallBlind.set('currentBet', 5);
+        smallBlind.save();
         var playerOne = table.get('users').toArray()[0];
         var playerTwo = table.get('users').toArray()[1];
         playerOne.set('cards', p1Hand);
@@ -75,8 +88,6 @@ export default Ember.Service.extend({
         playerTwo.set('holeCards', [mDeck[7], mDeck[8]]);
         playerOne.set('handIsLive', true);
         playerTwo.set('handIsLive', true);
-        playerOne.set('currentBet', 0);
-        playerTwo.set('currentBet', 0);
         players.save();
         thisService.set('p1HoleCards',[mDeck[5], mDeck[6]]);
         thisService.set('p2HoleCards',[mDeck[7], mDeck[8]]);
@@ -162,15 +173,17 @@ export default Ember.Service.extend({
     var oldActiveUser = table.get('users').toArray()[table.get('activePlayer')];
     oldActiveUser.set('isActive', false);
     oldActiveUser.save();
-    table.set('dealer', table.get('dealer') + 1);
-    if (table.get('dealer') >= table.get('users').toArray().length) {
-      table.set('dealer', 0);
+    var dealerIndex = table.get('dealer');
+    dealerIndex++;
+    if (dealerIndex === 2) {
+      dealerIndex = 0;
     }
-    var activeUser = table.get('users').toArray()[table.get('dealer')];
+    var activeUser = table.get('users').toArray()[dealerIndex];
     activeUser.set('isActive', true);
     activeUser.save();
-    table.set('activePlayer', table.get('dealer'));
-    table.set('lastToAct', table.get('dealer'));
+    table.set('dealer', dealerIndex);
+    table.set('activePlayer', dealerIndex);
+    table.set('lastToAct', dealerIndex);
     table.save();
   },
   awardPot(table, winningPlayer) {

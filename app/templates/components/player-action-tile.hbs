@@ -1,11 +1,15 @@
 {{#if user.isActive}}
   {{#unless table.allInAndCall}}
     {{#if (eq table.amountToCall 0)}}
-    <button class="btn btn-sm btn-success" {{action 'check' table}}>Check</button>
-    <button class="btn btn-sm btn-success" {{action 'bet' table}}>Bet</button>
-    {{input value=betAmount placeholder="Bet Amount" type="number"}}
+      <button class="btn btn-sm btn-success" {{action 'check' table}}>Check</button>
+      <button class="btn btn-sm btn-success" {{action 'bet' table}}>Bet</button>
+      {{input value=betAmount placeholder="Bet Amount" type="number"}}
     {{else}}
-      <button class="btn btn-sm btn-success" {{action 'callBet' table}}>Call(${{amount-to-call table.amountToCall user.currentBet}})</button>
+      {{#if (eq table.amountToCall user.currentBet)}}
+        <button class="btn btn-sm btn-success" {{action 'check' table}}>Check</button>
+      {{else}}
+        <button class="btn btn-sm btn-success" {{action 'callBet' table}}>Call(${{amount-to-call table.amountToCall user.currentBet}})</button>
+      {{/if}}
       {{#unless (eq table.amountToCall 0)}}
         <button class="btn btn-sm btn-success" {{action 'raise' table}}>Raise to:</button>
         {{input value=raiseAmount placeholder="Raise Amount" type="number"}}
