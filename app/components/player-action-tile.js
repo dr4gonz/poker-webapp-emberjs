@@ -28,7 +28,7 @@ export default Ember.Component.extend({
       var raiseAmount = parseInt(this.get('raiseAmount'));
       var amountToCall = table.get('amountToCall');
       if ((raiseAmount - amountToCall) >= amountToCall) {
-        this.get('playerAction').bet(table, raiseAmount);
+        this.get('playerAction').raise(table, raiseAmount);
         this.set('raiseAmount', '');
       } else {
         alert('INVALID BET');

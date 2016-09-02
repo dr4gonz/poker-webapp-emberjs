@@ -157,7 +157,6 @@ export default Ember.Service.extend({
     this.passActivePlayer(table);
   },
   raise(table, raiseAmount) {
-    alert('RAISING...');
     var mainPot = table.get('mainPot');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
     if (raiseAmount > activeUser.get('chips')) {
@@ -167,11 +166,10 @@ export default Ember.Service.extend({
         table.set('playerAllIn', true);
       }
       activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
+      table.set('mainPot', mainPot+(raiseAmount - activeUser.get('currentBet')));
       activeUser.set('currentBet', raiseAmount);
 
-      var amountToCall = table.get('amountToCall');
-      table.set('mainPot', mainPot+raiseAmount);
-      table.set('amountToCall', amountToCall+raiseAmount);
+      table.set('amountToCall', raiseAmount);
       table.set('lastToAct', table.get('activePlayer'));
       table.set('statusMessage', (activeUser.get('name') + " raised to " +raiseAmount+ " chips."));
       table.save();
