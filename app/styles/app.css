@@ -99,5 +99,6 @@ input, button {
   height: 100px;
   width: 90px;
   float: left;
-  border: solid black 5px;
+  border: solid #000 3px;
+  border-radius: 10%;
 }
