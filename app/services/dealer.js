@@ -58,6 +58,10 @@ export default Ember.Service.extend({
       table.set('statusMessage', (status + "... " + bigBlind.get('name') + " doesn't have enough chips to continue!"));
       table.save();
     } else {
+      bigBlind.set('chips', (bigBlind.get('chips') - 10));
+      smallBlind.set('chips', (smallBlind.get('chips') - 5));
+      bigBlind.save();
+      smallBlind.save();
       table.set('playerAllIn', false);
       table.set('allInAndCall', false);
       table.set('currentStreet', 'preflop');

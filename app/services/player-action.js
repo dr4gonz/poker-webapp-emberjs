@@ -97,9 +97,8 @@ export default Ember.Service.extend({
       }
     });
     if (liveHandCount === 1) {
-      this.get('dealer').finishHand(table);
+      // console.log(lastLivePlayer.get('name'));
       this.get('dealer').awardPot(table, lastLivePlayer);
-      this.get('dealer').populateDeck(table);
       return false;
     } else {
       return true;
