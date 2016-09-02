@@ -21,6 +21,7 @@ export default Ember.Component.extend({
       var desiredUserName = this.get('name');
       var pw = this.get('pw');
       var pwConf = this.get('pwConf');
+      var avatar = this.get('avatar');
       // check for empty inputs
       if (desiredUserName === undefined || pw === undefined || pwConf === undefined) {
         this.set('failedRegister', true);
@@ -51,6 +52,8 @@ export default Ember.Component.extend({
           seat: null,
           currentBet: null,
           chips: 3000,
+          avatar: avatar,
+
         };
         this.set('name', '');
         this.set('pw', '');
