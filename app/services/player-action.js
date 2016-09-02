@@ -81,7 +81,7 @@ export default Ember.Service.extend({
     activePlayer.set('handIsLive', false);
     activePlayer.save();
 
-    table.set('statusMessage', activeUser.get('name') + " folded.");
+    table.set('statusMessage', activePlayer.get('name') + " folded.");
 
     if (this.checkLiveHands(table)) {
       this.passActivePlayer(table);
