@@ -61,18 +61,23 @@ input, button {
 }
 
 .player1 {
-  position: relative;
-  top: 50px;
-  left: 5%;
+  width: 1300px;
+  float: left;
   color: white;
+  margin-left: 400px;
 }
 
 .player2 {
-  position: relative;
-  top: 225px;
-  left: 78.5%;
+  margin-right: 150px;
+  width: 250px;
+  float: right;
   color: white;
 }
+.community {
+  margin-top: 200px;
+  margin-left: 120px;
+}
+
 .pot-string {
   font-size: 2em;
   color: white;
@@ -82,4 +87,17 @@ input, button {
   color: yellow;
   font-family: Helvetica;
   font-size: 20px;
+}
+
+.avatar {
+ height: 150px;
+ width: 110px;
+
+}
+
+.player-avatar {
+  height: 100px;
+  width: 90px;
+  float: left;
+  border: solid black 5px;
 }

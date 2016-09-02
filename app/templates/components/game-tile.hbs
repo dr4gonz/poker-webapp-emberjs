@@ -10,28 +10,32 @@
   {{/if}}
 {{/unless}}
 <h3 class="text-center">Pot: $ {{table.mainPot}}</h3>
-<div class="table">
-  {{#if table.flopCards}}
-    <div class="board">
-      {{#if (eq table.currentStreet 'flop')}}
-        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-      {{/if}}
-      {{#if (eq table.currentStreet 'turn')}}
-        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-        <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
-      {{/if}}
-      {{#if (eq table.currentStreet 'river')}}
-        {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
-        <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
-        <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
-      {{/if}}
-    </div>
-  {{/if}}
-  {{#each table.users as |user|}}
-    {{#if user.seat}}
-      {{player-tile user=user}}
+<div class="table container">
+  <div class="col-sm-6 community">
+    {{#if table.flopCards}}
+      <div class="board">
+        {{#if (eq table.currentStreet 'flop')}}
+          {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+        {{/if}}
+        {{#if (eq table.currentStreet 'turn')}}
+          {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+          <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
+        {{/if}}
+        {{#if (eq table.currentStreet 'river')}}
+          {{#each table.flopCards as |card|}}<img class="community-card" src="images/cards/{{card}}.svg">{{/each}}
+          <img class="community-card" src="images/cards/{{table.turnCard}}.svg">
+          <img class="community-card" src="images/cards/{{table.riverCard}}.svg">
+        {{/if}}
+      </div>
     {{/if}}
-  {{/each}}
+    {{#each table.users as |user|}}
+      {{#if user.seat}}
+        <div class="col-sm-5 players">
+          {{player-tile user=user}}<div class="col-sm-4"> </div>
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
 </div>
 
 {{player-action-tile user=auth.currentUser table=table}}
