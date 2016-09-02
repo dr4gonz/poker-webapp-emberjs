@@ -1,3 +1,4 @@
+<h2 class="text-center">{{table.statusMessage}}</h2>
 {{#unless auth.currentUser.seat}}
   {{#if auth.loggedIn}}
     {{#unless table.seatOneOccupied}}
@@ -8,8 +9,7 @@
     {{/unless}}
   {{/if}}
 {{/unless}}
-<h1>Current street: {{table.currentStreet}}</h1>
-<p class="text-center">Pot: $ {{table.mainPot}}</p>
+<h3 class="text-center">Pot: $ {{table.mainPot}}</h3>
 <div class="table">
   {{#if table.flopCards}}
     <div class="board">

@@ -20,4 +20,5 @@ export default DS.Model.extend({
   allInAndCall: DS.attr(),
   seatOneOccupied: DS.attr(),
   seatTwoOccupied: DS.attr(),
+  statusMessage: DS.attr(),
 });

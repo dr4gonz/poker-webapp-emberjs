@@ -81,6 +81,8 @@ export default Ember.Service.extend({
     activePlayer.set('handIsLive', false);
     activePlayer.save();
 
+    table.set('statusMessage', activeUser.get('name') + " folded.");
+
     if (this.checkLiveHands(table)) {
       this.passActivePlayer(table);
     }
@@ -120,6 +122,7 @@ export default Ember.Service.extend({
       table.set('mainPot', mainPot + betAmount);
       table.set('amountToCall', betAmount);
       table.set('lastToAct', table.get('activePlayer'));
+      table.set('statusMessage', (activeUser.get('name') + " bet " +betAmount+ " chips."));
       table.save();
 
       this.passActivePlayer(table);
@@ -129,9 +132,10 @@ export default Ember.Service.extend({
     var mainPot = table.get('mainPot');
     var amountToCall = table.get('amountToCall');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
+    var totalToCall = amountToCall - activeUser.get('currentBet');
 
-    table.set('mainPot', (mainPot + (amountToCall - activeUser.get('currentBet'))));
-    activeUser.set('chips', (activeUser.get('chips')-(amountToCall - activeUser.get('currentBet'))));
+    table.set('mainPot', (mainPot + (totalToCall)));
+    activeUser.set('chips', (activeUser.get('chips')-(totalToCall)));
     //provides a check to see if this call puts user all-in. Returns un-called chips.
     if (activeUser.get('chips') <= 0) {
       var uncalledChips = (activeUser.get('chips') * -1);
@@ -149,9 +153,11 @@ export default Ember.Service.extend({
     }
     table.save();
 
+    table.set('statusMessage', (activeUser.get('name') + " called " +totalToCall+ " chips."));
     this.passActivePlayer(table);
   },
   raise(table, raiseAmount) {
+    alert('RAISING...');
     var mainPot = table.get('mainPot');
     var activeUser = table.get('users').toArray()[table.get('activePlayer')];
     if (raiseAmount > activeUser.get('chips')) {
@@ -167,6 +173,7 @@ export default Ember.Service.extend({
       table.set('mainPot', mainPot+raiseAmount);
       table.set('amountToCall', amountToCall+raiseAmount);
       table.set('lastToAct', table.get('activePlayer'));
+      table.set('statusMessage', (activeUser.get('name') + " raised to " +raiseAmount+ " chips."));
       table.save();
     }
     this.passActivePlayer(table);

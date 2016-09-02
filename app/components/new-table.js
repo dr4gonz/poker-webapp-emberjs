@@ -35,6 +35,7 @@ export default Ember.Component.extend({
             seatTwoOccupied: false,
             playerAllIn: false,
             allInAndCall: false,
+            statusMessage: 'Click Deal Hand to start',
           };
         var newTable = thisService.get('store').createRecord('table', params);
         newTable.save();

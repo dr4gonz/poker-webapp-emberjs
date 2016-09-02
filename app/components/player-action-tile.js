@@ -4,6 +4,8 @@ export default Ember.Component.extend({
   playerAction: Ember.inject.service(),
   actions: {
     check(table) {
+      var activePlayer = table.get('users').toArray()[table.get('activePlayer')];
+      table.set('statusMessage', (activePlayer.get('name') + " checked."));
       this.get('playerAction').passActivePlayer(table);
     },
     fold(table) {
