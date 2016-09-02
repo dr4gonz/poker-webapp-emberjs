@@ -18,14 +18,14 @@ module.exports = function(environment) {
       // when it is created
     },
     firebase: {
-      apiKey: "AIzaSyDUXcjnD2pstv7kQ46a6L2zFqq6Ysno_xs",
-      authDomain: "epicodus-poker.firebaseapp.com",
-      databaseURL: "https://epicodus-poker.firebaseio.com",
-      storageBucket: "epicodus-poker.appspot.com",
-      // apiKey: "AIzaSyAyrfvWIZ9AcdBofuNJgseNSzccu0So5tw",
-      // authDomain: "epicodus-poker-2.firebaseapp.com",
-      // databaseURL: "https://epicodus-poker-2.firebaseio.com",
-      // storageBucket: "epicodus-poker-2.appspot.com",
+      // apiKey: "AIzaSyDUXcjnD2pstv7kQ46a6L2zFqq6Ysno_xs",
+      // authDomain: "epicodus-poker.firebaseapp.com",
+      // databaseURL: "https://epicodus-poker.firebaseio.com",
+      // storageBucket: "epicodus-poker.appspot.com",
+      apiKey: "AIzaSyAyrfvWIZ9AcdBofuNJgseNSzccu0So5tw",
+      authDomain: "epicodus-poker-2.firebaseapp.com",
+      databaseURL: "https://epicodus-poker-2.firebaseio.com",
+      storageBucket: "epicodus-poker-2.appspot.com",
     },
   };
 

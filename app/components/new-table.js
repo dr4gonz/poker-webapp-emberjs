@@ -6,8 +6,13 @@ export default Ember.Component.extend({
   actions: {
     createTable() {
       var thisService = this;
+
       this.get('store').findAll('table').then(function(tableData){
         tableData.forEach(function(table){
+          table.get('users').toArray().forEach(function(user) {
+            user.set('seat', null);
+            user.save();
+          });
           table.destroyRecord();
         });
           var params = {

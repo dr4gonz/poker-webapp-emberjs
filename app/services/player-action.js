@@ -157,7 +157,7 @@ export default Ember.Service.extend({
     if (raiseAmount > activeUser.get('chips')) {
       alert('INVALID RAISE');
     } else {
-      if (betAmount === activeUser.get('chips')) {
+      if (raiseAmount === activeUser.get('chips')) {
         table.set('playerAllIn', true);
       }
       activeUser.set('chips', (activeUser.get('chips')-(raiseAmount - activeUser.get('currentBet'))));
