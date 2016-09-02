@@ -1,9 +1,4 @@
-{{table.name}}
 {{#if auth.loggedIn}}
   <button {{action 'leaveTable' table}}>Leave Table</button>
 {{/if}}
-{{#each table.users as |user|}}
-  {{user.name}}
-{{/each}}
-
 {{game-tile table=table users=users}}

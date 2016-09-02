@@ -101,3 +101,8 @@ input, button {
   float: left;
   border: solid black 5px;
 }
+
+.player-action {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

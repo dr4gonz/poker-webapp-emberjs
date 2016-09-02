@@ -1,8 +1,5 @@
-
 {{header-tile users=model.users}}
 
-
-{{new-table}}
 {{#each model.tables as |table|}}
   {{table-tile table=table users=model.users joinTable="joinTable"}}
 {{/each}}

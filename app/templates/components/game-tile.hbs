@@ -37,10 +37,9 @@
     {{/each}}
   </div>
 </div>
-
-{{player-action-tile user=auth.currentUser table=table}}
-{{meta-tile table=table}}
+<div class="player-action text-center">
+  {{player-action-tile user=auth.currentUser table=table}}
+</div>
 <ul>
-  <button class="btn btn-lg btn-success" {{action 'dealHand' table}}>Deal Hand</button>
-  <button class="btn btn-lg btn-success" {{action 'finishHand' table}}>Finish Hand</button>
+  <button class="btn btn-lg btn-success center-block" {{action 'dealHand' table}}>Deal Hand</button>
 </ul>
