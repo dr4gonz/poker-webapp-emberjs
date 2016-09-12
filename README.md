@@ -1,7 +1,10 @@
 # Poker-webapp-emberjs
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This is a poker webapp made using EmberJS to fulfill the group project requirement of the JavaScript course at Epicodus.
+
+### Authors
+
+Alan Denison, Ben Logue(benjamin.logue73@gmail.com), Carl Egbert (egbertcarl@gmail.com), and Matt Reyes (mreyez@gmail.com)
 
 ## Prerequisites
 
@@ -22,26 +25,13 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember server`
+* `ember s`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
 
 ### Building
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
 
 ## Further Reading / Useful Links
 
@@ -51,3 +41,8 @@ Specify what it takes to deploy your app.
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
+### License
+
+Licensed under the MIT License.
+
+&copy; 2016
